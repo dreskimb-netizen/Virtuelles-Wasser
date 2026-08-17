@@ -2,36 +2,94 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Wasserschule Oberfranken</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wasserschule Oberfranken – Virtuelles Wasser</title>
   <style>
-    body { font-family: Arial, sans-serif; background-color: #f0f8ff; margin: 0; padding: 20px; text-align: center; }
-    .box { background: white; max-width: 900px; margin: 20px auto; padding: 20px; border-radius: 12px; border: 2px solid #0077b6; }
-    h1 { color: #0077b6; }
-    iframe { width: 100%; border: none; border-radius: 8px; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f0f7fb;
+      color: #2c3e50;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    h1 {
+      color: #0077b6;
+      margin-top: 0;
+    }
+    .activity-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .activity-card h2 {
+      color: #023e8a;
+      margin-top: 0;
+      border-bottom: 2px solid #e0f2fe;
+      padding-bottom: 10px;
+    }
+    .iframe-wrapper {
+      position: relative;
+      width: 100%;
+      margin-top: 15px;
+    }
+    iframe {
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+    }
   </style>
+  <script src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/js/h5p-resizer.js" charset="UTF-8"></script>
 </head>
 <body>
 
-  <h1>💧 Wasserschule Oberfranken: Virtuelles Wasser</h1>
+  <div class="container">
+    <header>
+      <h1>Wasserschule Oberfranken</h1>
+      <p>Entdecke die Welt des virtuellen Wassers mit unseren interaktiven Aufgaben!</p>
+    </header>
 
-  <div class="box">
-    <h2>Station 1: Wimmelbild</h2>
-    <p>Klicke auf die Punkte, um den versteckten Wasserverbrauch zu entdecken!</p>
- <iframe src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/content/1292975859694986207/embed" aria-label="Wimmelbild: Wo versteckt sich virtuelles Wasser?" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay *; geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe><script src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/js/h5p-resizer.js" charset="UTF-8"></script>
+    <!-- Station 1: Wimmelbild -->
+    <section class="activity-card">
+      <h2>Station 1: Wimmelbild – Wo versteckt sich virtuelles Wasser?</h2>
+      <p>Klicke auf die Hotspots im Bild, um herauszufinden, wo überall Wasser im Alltag versteckt ist.</p>
+      <div class="iframe-wrapper">
+        <iframe src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/content/1292975859694986207/embed" aria-label="Wimmelbild: Wo versteckt sich virtuelles Wasser?" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay *; geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe>
+      </div>
+    </section>
+
+    <!-- Station 2: Wassergiganten-Check (Drag & Drop Ranking) -->
+    <section class="activity-card">
+      <h2>Station 2: Wassergiganten-Check</h2>
+      <p>Ordne die Produkte nach ihrem virtuellen Wasserverbrauch ein.</p>
+      <div class="iframe-wrapper">
+        <iframe src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/content/1292984077120371957/embed" aria-label="Wassergiganten-Check" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay *; geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe>
+      </div>
+    </section>
+
+    <!-- Station 3: Memory Spiel -->
+    <section class="activity-card">
+      <h2>Station 3: Memory-Spiel</h2>
+      <p>Finde die passenden Paare und teste dein Wissen.</p>
+      <div class="iframe-wrapper">
+        <iframe src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/content/1292975888941131377/embed" aria-label="Memory Spiel" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay *; geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe>
+      </div>
+    </section>
   </div>
-
-  <div class="box">
-    <h2>Station 2: Rangfolge ordnen</h2>
-    <p>Sortiere die Gegenstände vom kleinsten zum größten Verbrauch!</p>
-    <iframe src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/content/1292984077120371957/embed" aria-label="Wassergiganten-Check" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay *; geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe><script src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/js/h5p-resizer.js" charset="UTF-8"></script>
-  </div>
-
-  <div class="box">
-    <h2>Station 3: Memory-Spiel</h2>
-    <p>Finde die passenden Paare!</p>
-<iframe src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/content/1292975888941131377/embed" aria-label="Memory Spiel" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay *; geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe><script src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/js/h5p-resizer.js" charset="UTF-8"></script>
-  </div>
-
 
 </body>
 </html>
