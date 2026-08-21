@@ -14,34 +14,137 @@
       padding: 20px;
     }
     .container {
-      max-width: 1100px;
+      max-width: 1050px;
       margin: 0 auto;
     }
     header {
       text-align: center;
-      margin-bottom: 40px;
-      padding: 20px;
+      margin-bottom: 30px;
+      padding: 25px;
       background: #ffffff;
       border-radius: 12px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
     h1 {
       color: #0077b6;
-      margin-top: 0;
+      margin: 0 0 8px 0;
     }
-    .activity-card {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 25px;
-      margin-bottom: 40px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    .subtitle {
+      font-size: 1.15rem;
+      color: #023e8a;
+      font-weight: bold;
+      margin: 0;
     }
-    .activity-card h2 {
+    h2 {
       color: #023e8a;
       margin-top: 0;
       border-bottom: 2px solid #e0f2fe;
-      padding-bottom: 10px;
+      padding-bottom: 8px;
     }
+    h3 {
+      color: #0077b6;
+      margin-top: 22px;
+      margin-bottom: 8px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 35px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    /* Farb-Boxen für die Wasserfarben */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .color-box {
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 6px solid transparent;
+    }
+    .box-green { background: #e8f5e9; border-color: #2e7d32; }
+    .box-blue { background: #e1f5fe; border-color: #0288d1; }
+    .box-gray { background: #f5f5f5; border-color: #757575; }
+
+    /* Infokasten Wassergiganten */
+    .highlight-box {
+      background: #eef9ff;
+      border: 2px solid #bde0fe;
+      border-radius: 8px;
+      padding: 15px 20px;
+      margin: 20px 0;
+    }
+    .highlight-box ul {
+      margin: 5px 0 0 0;
+      padding-left: 20px;
+    }
+
+    /* Schätz-Ecke (Differenzierung) */
+    .guess-box {
+      background: #fff8e1;
+      border: 2px dashed #ffb300;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 35px;
+    }
+    .guess-item {
+      margin-bottom: 15px;
+    }
+    .guess-item input {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 140px;
+      font-size: 15px;
+    }
+    .btn-check {
+      background: #0077b6;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      font-size: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn-check:hover {
+      background: #023e8a;
+    }
+    .solution {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background: #e8f5e9;
+      border-radius: 6px;
+      border-left: 4px solid #2e7d32;
+    }
+
+    /* Experiment Box */
+    .experiment-box {
+      background: #fdf2e9;
+      border-left: 6px solid #e67e22;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 25px;
+    }
+    .experiment-box h3 {
+      color: #d35400;
+      margin-top: 0;
+    }
+
+    /* Listen-Styling */
+    ul {
+      margin-top: 5px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+
+    /* IFrames */
     .iframe-wrapper {
       position: relative;
       width: 100%;
@@ -58,13 +161,150 @@
 <body>
 
   <div class="container">
+    
     <header>
       <h1>Wasserschule Oberfranken</h1>
-      <p>Entdecke die Welt des virtuellen Wassers mit unseren interaktiven Aufgaben!</p>
+      <p class="subtitle">Virtuelles Wasser – Dem unsichtbaren auf der Spur</p>
     </header>
 
-    <!-- Station 1: Wimmelbild -->
-    <section class="activity-card">
+    <!-- TEIL 1: SCHÜLER-INFOTEXT (ORIGINALTEXT AUS DEM PDF) -->
+    
+    <!-- SEITE 1: GRUNDLAGEN & WASSER-FARBEN -->
+    <section class="card">
+      <h2>Wo versteckt sich das Wasser?</h2>
+      <p>Wenn du morgens den Wasserhahn aufdrehst, um dir die Zähne zu putzen, ein Glas Wasser trinkst oder unter die Dusche hüpfst, siehst du das Wasser fließen. Das nennen wir <strong>direktes Wasser</strong>. In Deutschland verbraucht jeder Mensch davon etwa 125 Liter am Tag – das ist ungefähr eine volle Badewanne.</p>
+      
+      <p>Doch das ist nur die Spitze des Eisbergs. In Wahrheit verbraucht jeder von uns jeden Tag fast <strong>4.000 Liter Wasser</strong>! Wie kann das sein, wenn wir es doch gar nicht sehen?</p>
+      
+      <p>Die Antwort lautet: Fast alles, was wir essen, anziehen oder benutzen, hat einen unsichtbaren „Wasser-Rucksack“ auf. Um einen Apfel wachsen zu lassen, ein T-Shirt zu nähen oder ein Smartphone zu bauen, werden riesige Mengen Wasser gebraucht, verdunstet oder verschmutzt. Dieses versteckte Wasser nennen Forscher <strong>virtuelles Wasser</strong>.</p>
+
+      <h3>Ein Apfel geht auf Reisen</h3>
+      <p>Schau dir einen einfachen Apfel an: Am Baum braucht er monatelang Regen und Grundwasser, damit er saftig wird. Nach der Ernte wird er gewaschen, sortiert und verpackt. Bis er in deiner Brotdose landet, hat ein einziger Apfel etwa 125 Liter Wasser „geschluckt“ – das ist mehr als ein ganzes Schulfass voll!</p>
+      <p>Noch viel extremer ist es bei tierischen Lebensmitteln. Eine Kuh frisst im Laufe ihres Lebens riesige Mengen an Getreide und Soja. Diese Futterpflanzen müssen monatelang auf Feldern bewässert werden. Rechnet man das gesamte Futter, das Trinkwasser der Kuh und die Schlachtung zusammen, stecken in nur einem einzigen Kilogramm Rindfleisch über 15.000 Liter Wasser!</p>
+
+      <h3>Die drei Farben des unsichtbaren Wassers</h3>
+      <p>Wasser ist nicht gleich Wasser. Um zu verstehen, wo das virtuelle Wasser herkommt, teilen Forscher es in drei Farben ein:</p>
+      
+      <div class="color-grid">
+        <div class="color-box box-green">
+          <strong>🟢 Grünes Wasser:</strong><br>
+          Das ist natürlicher Regen, der im Boden gespeichert wird und Pflanzen wachsen lässt. Wenn Getreide auf einem fränkischen Feld durch Regen wächst, ist das grünes Wasser. Es schadet der Natur meist nicht.
+        </div>
+        <div class="color-box box-blue">
+          <strong>🔵 Blaues Wasser:</strong><br>
+          Das ist Wasser aus Flüssen, Seen oder tief aus der Erde (Grundwasser), das künstlich auf Felder gepumpt wird. Wenn Erdbeeren im trockenen Süden Spaniens oder Baumwolle in der Wüste bewässert werden, fehlt dieses blaue Wasser den Menschen und Tieren vor Ort.
+        </div>
+        <div class="color-box box-gray">
+          <strong>⚪ Graues Wasser:</strong><br>
+          Das ist Schmutzwasser. Wenn beim Färben einer Jeans giftige Farben ins Abwasser fließen oder Dünger ins Grundwasser sickert, muss sauberes Wasser hinzukommen, um das Gift zu verdünnen.
+        </div>
+      </div>
+
+      <h3>Was hat deine Jeanshose mit der Wüste zu tun?</h3>
+      <p>Deine Lieblingsjeans wiegt nicht viel – aber bei ihrer Herstellung verbraucht sie unglaubliche <strong>8.000 Liter Wasser</strong>! Die Baumwolle wächst oft in sehr trockenen Ländern. Riesige Bewässerungsanlagen saugen dort Flüsse und Seen leer. Ein berühmtes Beispiel ist der riesige Aralsee in Asien: Weil das Wasser für Baumwollfelder abgezweigt wurde, ist ein fast meergroßer See fast vollständig zu einer staubigen Wüste vertrocknet, in der rostige Schiffe im Sand liegen.</p>
+
+      <div class="highlight-box">
+        <strong>📊 Infokasten: Die Wassergiganten</strong>
+        <ul>
+          <li>1 kg Rindfleisch &approx; 15.400 l</li>
+          <li>1 Jeans &approx; 8.000 l</li>
+          <li>1 Baumwoll-T-Shirt &approx; 2.500 l</li>
+          <li>1 Tafel Schokolade &approx; 1.700 l</li>
+          <li>1 Apfel &approx; 125 l</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SEITE 2: FLEISCH, MILCH & SOJA -->
+    <section class="card">
+      <h2>Der weite Weg vom Futtertrog ins Glas: Warum Schnitzel und Milch so durstig sind</h2>
+      
+      <h3>Was hat mein Burger mit dem Regenwald zu tun?</h3>
+      <p>Wenn wir an eine Kuh auf einer oberfränkischen Weide denken, sehen wir saftig grünes Gras und frische Luft. Doch die meisten Nutztiere auf der Welt fressen nicht nur Gras, sondern Kraftfutter – vor allem Soja und Getreide.</p>
+      <p>Soja ist eine Hülsenfrucht, die besonders viel Eiweiß enthält und Tiere schnell wachsen lässt. Riesige Sojafelder befinden sich in Südamerika, etwa in Brasilien. Um dort Platz für Felder zu schaffen, werden wertvolle Regenwälder gerodet. Bis das Soja geerntet, zu Futterpellets verarbeitet und mit Frachtschiffen über die Ozeane zu uns transportiert wird, sind gewaltige Mengen Regen- und Bewässerungswasser verbraucht worden.</p>
+      <p><em>(Kraftfutter für die Welt: Millionen Tonnen Soja werden jedes Jahr bewässert und geerntet, um als Tierfutter nach Europa transportiert zu werden.)</em></p>
+
+      <h3>Die Rechnung der Wassergiganten</h3>
+      <p>Eine Kuh trinkt an einem heißen Sommertag zwar beachtliche 100 Liter Wasser, doch das eigentliche Wasser steckt im Futtertrog. Eine Mastkuh frisst tausende Kilogramm Getreide und Soja, bevor aus ihr Fleisch wird:</p>
+      <ul>
+        <li>&rarr; <strong>1 Kilogramm Rindfleisch</strong> benötigt im globalen Schnitt rund 15.400 Liter Wasser. Das sind über 100 voll gefüllte Badewannen für nur ein einziges Kilo Fleisch!</li>
+        <li>&rarr; <strong>1 Kilogramm Schweinefleisch</strong> schlägt mit rund 6.000 Litern Wasser zu Buche.</li>
+        <li>&rarr; <strong>1 Kilogramm Geflügelfleisch</strong> verbraucht etwa 4.300 Liter Wasser.</li>
+      </ul>
+      <p>Pflanzliche Lebensmittel wie Kartoffeln (ca. 290 Liter pro kg) oder heimisches Gemüse schneiden im Vergleich um ein Vielfaches wassersparender ab, da der Umweg über das Tierfutter entfällt.</p>
+
+      <h3>Wie viel Wasser steckt im Glas Milch?</h3>
+      <p>Auch Milch und Milchprodukte sind echte Wasserspeicher:</p>
+      <ul>
+        <li>In <strong>1 Liter Kuhmilch</strong> stecken im Schnitt rund 1.000 Liter virtuelles Wasser (für Futter, Stallreinigung und Verarbeitung).</li>
+        <li>Für <strong>1 Kilogramm Schnittkäse</strong> werden rund 5.000 Liter Wasser benötigt, da man für ein einziges Kilo Käse etwa 10 Liter Milch eindicken muss.</li>
+        <li>Pflanzliche Alternativen wie <strong>Hafermilch</strong> aus heimischem Anbau schneiden deutlich besser ab: Ein Liter Haferdrink verbraucht nur etwa 30 bis 50 Liter Wasser.</li>
+      </ul>
+    </section>
+
+    <!-- SEITE 3: HANDLUNGSAPPELL & PAPIERSCHÖPF-EXPERIMENT -->
+    <section class="card">
+      <h2>Wasserdetektive im Einsatz – Wie du mit kleinen Schritten riesige Wellen schlägst</h2>
+      
+      <h3>Warum dein Schulheft ein echter Wasserspeicher ist</h3>
+      <p>Für ein einziges Blatt frisches, weißes Papier aus neuen Holzfasern werden in der Fabrik bis zu 10 Liter Wasser benötigt – das ist ein ganzer Putzeimer voll! Denn das Holz muss mit viel Wasser und Chemie gekocht, gebleicht und ausgewaschen werden.</p>
+      <p>Bei Recyclingpapier (aus alten Zeitungen oder Kartons) sind die Papierfasern schon fertig. Man braucht sie nur im Wasser aufzuweichen und neu zu formen. Das spart über 70 % Wasser und jede Menge Energie. Wenn deine ganze Klasse Hefte mit dem Umweltzeichen „Blauer Engel“ nutzt, rettet ihr jedes Schuljahr tausende Liter sauberes Trinkwasser!</p>
+
+      <h3>Du hast die Wahl: Dein täglicher Wasser-Fußabdruck</h3>
+      <p>Virtuelles Wasser lässt sich nicht einfach am Hahn abdrehen – aber du kannst jeden Tag mit deinen Entscheidungen bestimmen, wie viel Wasser auf der Welt verbraucht wird. Niemand muss perfekt sein oder auf alles verzichten. Wenn viele Menschen kleine Dinge verändern, spart das Millionen Liter wertvolles Trink- und Grundwasser.</p>
+
+      <div class="experiment-box">
+        <h3>🔬 Die eigene Papier-Fabrik – Papier schöpfen und Wasser sparen</h3>
+        <p><strong>Was du brauchst:</strong> 2 Seiten altes Zeitungspapier oder 1 Eierkarton, warmes Wasser, 1 große flache Schüssel oder Wanne, Pürierstab, 1 feines Küchensieb (oder ein Stück Fliegengitter auf einem Rahmen), 1 Geschirrtuch, 1 Nudelholz.</p>
+        
+        <p><strong>Und so geht's:</strong></p>
+        <ol>
+          <li>Zerreiß das Altpapier in winzige Schnipsel und weiche sie in einer Schüssel mit warmem Wasser für 15 Minuten ein.</li>
+          <li>Püriere die Schnipsel mit dem Pürierstab zu einem gleichmäßigen, breiigen Faserbrei (Pulpe). Gib bei Bedarf etwas Wasser dazu.</li>
+          <li>Fülle die Wanne mit Wasser und rühre zwei Hände voll Brei hinein. Tauche das Sieb flach auf den Grund und hebe es waagerecht an, sodass sich eine gleichmäßige Faserschicht auf dem Gitter absetzt.</li>
+          <li>Lass das Wasser abtropfen. Stürze das nasse Papierblatt auf ein Geschirrtuch, decke es ab und rolle mit dem Nudelholz das restliche Wasser heraus. Lass dein Papier an der Luft trocknen.</li>
+        </ol>
+        <p><strong>Erklärung:</strong> Die Papierfasern verhaken sich im Wasser von ganz alleine miteinander. Das abgetropfte Wasser in der Wanne ist nicht verloren – man kann darin direkt das nächste Blatt schöpfen! Bei echtem Recyclingpapier geht kaum Wasser verloren, während bei neuem Papier aus Holzstämmen gigantische Mengen Frischwasser verbraucht und verschmutzt werden.</p>
+      </div>
+    </section>
+
+    <!-- TEIL 2: SCHÄTZ-ECKE VOR DEN STATIONEN (DIFFERENZIERUNG) -->
+    <section class="guess-box">
+      <h2>🤔 Schätz-Ecke: Was glaubst du?</h2>
+      <p>Teste dein Gefühl für Größenordnungen, bevor du die interaktiven Stationen startest:</p>
+      
+      <div class="guess-item">
+        <label>1. Wie viele Liter Wasser stecken in einer <strong>Jeans</strong>? </label><br>
+        <input type="number" id="guessJeans" placeholder="z. B. 2000"> Liter
+      </div>
+
+      <div class="guess-item">
+        <label>2. Wie viele Liter Wasser stecken in <strong>1 kg Rindfleisch</strong>? </label><br>
+        <input type="number" id="guessBeef" placeholder="z. B. 5000"> Liter
+      </div>
+
+      <div class="guess-item">
+        <label>3. Wie viele Liter Wasser stecken in <strong>1 Tafel Schokolade</strong>? </label><br>
+        <input type="number" id="guessChoc" placeholder="z. B. 500"> Liter
+      </div>
+
+      <button class="btn-check" onclick="document.getElementById('solutionBox').style.display='block'">Schätzung prüfen & Auflösung anzeigen</button>
+
+      <div id="solutionBox" class="solution">
+        <strong>🔍 Die echten Zahlen zum Vergleich:</strong>
+        <ul>
+          <li><strong>Jeans:</strong> ca. 8.000 Liter (entspricht ca. 50 Badewannen!)</li>
+          <li><strong>1 kg Rindfleisch:</strong> ca. 15.400 Liter (über 100 Badewannen!)</li>
+          <li><strong>1 Tafel Schokolade:</strong> ca. 1.700 Liter (ca. 11 Badewannen!)</li>
+        </ul>
+        <em>Lagst du nah dran oder hast du den Wasserverbrauch unterschätzt? Finde es jetzt in den Stationen genauer heraus!</em>
+      </div>
+    </section>
+
+    <!-- TEIL 3: INTERAKTIVE H5P-STATIONEN -->
+    
+    <!-- Station 1 -->
+    <section class="card">
       <h2>Station 1: Wimmelbild – Wo versteckt sich virtuelles Wasser?</h2>
       <p>Klicke auf die Hotspots im Bild, um herauszufinden, wo überall Wasser im Alltag versteckt ist.</p>
       <div class="iframe-wrapper">
@@ -72,8 +312,8 @@
       </div>
     </section>
 
-    <!-- Station 2: Wassergiganten-Check (Drag & Drop Ranking) -->
-    <section class="activity-card">
+    <!-- Station 2 -->
+    <section class="card">
       <h2>Station 2: Wassergiganten-Check</h2>
       <p>Ordne die Produkte nach ihrem virtuellen Wasserverbrauch ein.</p>
       <div class="iframe-wrapper">
@@ -81,14 +321,15 @@
       </div>
     </section>
 
-    <!-- Station 3: Memory Spiel -->
-    <section class="activity-card">
+    <!-- Station 3 -->
+    <section class="card">
       <h2>Station 3: Memory-Spiel</h2>
-      <p>Finde die passenden Paare und teste dein Wissen.</p>
+      <p>Finde die passenden Paare und festige dein Wissen über grünes, blaues und graues Wasser.</p>
       <div class="iframe-wrapper">
         <iframe src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/content/1292975888941131377/embed" aria-label="Memory Spiel" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay *; geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe>
       </div>
     </section>
+
   </div>
 
 </body>
