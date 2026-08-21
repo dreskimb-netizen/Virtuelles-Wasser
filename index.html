@@ -140,6 +140,64 @@
       margin-top: 0;
     }
 
+    /* STUFE 1: TRAINER-SPIEL FÜR JÜNGERE SCHÜLER */
+    .junior-trainer {
+      background: #fdf8e2;
+      border: 2px solid #f39c12;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+    .trainer-card {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .trainer-btns button {
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    .btn-g { background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
+    .btn-b { background: #e1f5fe; color: #0288d1; border-color: #90caf9; }
+    .btn-gr { background: #f5f5f5; color: #616161; border-color: #bdbdbd; }
+    .trainer-feedback {
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
+    /* Hilfebox / Joker */
+    .memory-hint-box {
+      background: #f3e5f5;
+      border: 2px dashed #ab47bc;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+    }
+    .memory-hint-box summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: #6a1b9a;
+      font-size: 1.05rem;
+    }
+    .memory-hint-content {
+      margin-top: 15px;
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #e1bee7;
+    }
+
     ul { margin-top: 5px; }
     li { margin-bottom: 6px; }
 
@@ -267,7 +325,7 @@
       </div>
     </section>
 
-    <!-- TEIL 2: SCHÄTZ-ECKE 1 VOR STATION 1 (ALLGEMEINE ALLTAGSDINGE) -->
+    <!-- TEIL 2: SCHÄTZ-ECKE 1 VOR STATION 1 -->
     <section class="guess-box">
       <h3>🤔 Schätz-Ecke 1: Wasserdetektiv-Start</h3>
       <p>Bevor du das Wimmelbild erkundest: Wie viel virtuelles Wasser schätzt du in diesen alltäglichen Dingen?</p>
@@ -299,7 +357,7 @@
       </div>
     </section>
 
-    <!-- TEIL 3: INTERAKTIVE H5P-STATIONEN -->
+    <!-- TEIL 3: INTERAKTIVE STATIONEN -->
     
     <!-- Station 1 -->
     <section class="card">
@@ -357,16 +415,95 @@
       </div>
     </section>
 
-    <!-- Station 3 -->
+    <!-- Station 3: DIFFERENZIERTES ZWEI-STUFEN-FINALE -->
     <section class="card">
-      <h2>Station 3: Memory-Spiel</h2>
-      <p>Finde die passenden Paare und festige dein Wissen über grünes, blaues und graues Wasser.</p>
+      <h2>Station 3: Farb-Check & Memory-Finale</h2>
+      
+      <!-- STUFE 1: JUNIOR-TRAINER (FÜR JÜNGERE / SCHWÄCHERE SCHÜLER) -->
+      <div class="junior-trainer">
+        <h3 style="color: #d35400; margin-top: 0;">🟢🔵⚪ Level 1: Junior-Trainer (Farb-Zuordnung)</h3>
+        <p>Welche Wasser-Farbe passt? Klicke auf die richtige Farbe und teste dein Wissen sofort:</p>
+        
+        <div class="trainer-card">
+          <span>1. 🌧️ Ein <strong>Regenschauer</strong> lässt das Weizenfeld in Franken wachsen:</span>
+          <div class="trainer-btns">
+            <button class="btn-g" onclick="checkTrainer(1, 'green')">Grün</button>
+            <button class="btn-b" onclick="checkTrainer(1, 'blue')">Blau</button>
+            <button class="btn-gr" onclick="checkTrainer(1, 'gray')">Grau</button>
+            <span id="fb1" class="trainer-feedback"></span>
+          </div>
+        </div>
+
+        <div class="trainer-card">
+          <span>2. 🚰 Riesige <strong>Sprinkler-Anlagen</strong> pumpen Flusswasser auf ein Erdbeerfeld in Spanien:</span>
+          <div class="trainer-btns">
+            <button class="btn-g" onclick="checkTrainer(2, 'green')">Grün</button>
+            <button class="btn-b" onclick="checkTrainer(2, 'blue')">Blau</button>
+            <button class="btn-gr" onclick="checkTrainer(2, 'gray')">Grau</button>
+            <span id="fb2" class="trainer-feedback"></span>
+          </div>
+        </div>
+
+        <div class="trainer-card">
+          <span>3. 👖 In einer Fabrik fließt <strong>giftige blaue Textilfarbe</strong> ins Abwasser:</span>
+          <div class="trainer-btns">
+            <button class="btn-g" onclick="checkTrainer(3, 'green')">Grün</button>
+            <button class="btn-b" onclick="checkTrainer(3, 'blue')">Blau</button>
+            <button class="btn-gr" onclick="checkTrainer(3, 'gray')">Grau</button>
+            <span id="fb3" class="trainer-feedback"></span>
+          </div>
+        </div>
+
+        <div class="trainer-card">
+          <span>4. 🚜 Ein Bauer spritzt <strong>Kunstdünger</strong>, der ins Grundwasser sickert:</span>
+          <div class="trainer-btns">
+            <button class="btn-g" onclick="checkTrainer(4, 'green')">Grün</button>
+            <button class="btn-b" onclick="checkTrainer(4, 'blue')">Blau</button>
+            <button class="btn-gr" onclick="checkTrainer(4, 'gray')">Grau</button>
+            <span id="fb4" class="trainer-feedback"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STUFE 2: PROFI-MEMORY -->
+      <h3 style="color: #0077b6;">🧠 Level 2: Profi-Memory-Spiel</h3>
+      <p>Finde die passenden Paare und meistere die kniffligen Begriffe:</p>
+
+      <details class="memory-hint-box">
+        <summary>💡 Detektiv-Joker & Denkstützen öffnen (Hier klicken)</summary>
+        <div class="memory-hint-content">
+          <strong style="color: #6a1b9a;">1. Die Farb-Merkbrücken:</strong>
+          <ul style="margin-bottom: 12px;">
+            <li>🌱 <strong>Grün:</strong> Natürlicher Regen auf Felder und Wiesen.</li>
+            <li>🚰 <strong>Blau:</strong> Künstlich gepumptes Wasser (Brunnen, Leitungen, Schläuche).</li>
+            <li>🧪 <strong>Grau:</strong> Schmutzwasser durch Farben, Dünger oder Industrie.</li>
+          </ul>
+          <div style="background: #fdf2e9; border-left: 4px solid #e67e22; padding: 10px; border-radius: 4px; font-size: 0.95rem;">
+            ⚠️ <strong>Achtung Stolperfalle:</strong> Künstlich bewässerte Pflanzen zählen als <strong>blaues Wasser</strong>, nicht als grünes Wasser!
+          </div>
+        </div>
+      </details>
+
       <div class="iframe-wrapper">
         <iframe src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/content/1292975888941131377/embed" aria-label="Memory Spiel" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay *; geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe>
       </div>
     </section>
 
   </div>
+
+  <script>
+    function checkTrainer(q, choice) {
+      var answers = { 1: 'green', 2: 'blue', 3: 'gray', 4: 'gray' };
+      var fb = document.getElementById('fb' + q);
+      if (choice === answers[q]) {
+        fb.innerHTML = "✅ Richtig!";
+        fb.style.color = "#2e7d32";
+      } else {
+        fb.innerHTML = "❌ Nicht ganz, probier's nochmal!";
+        fb.style.color = "#c0392b";
+      }
+    }
+  </script>
 
 </body>
 </html>
