@@ -17,27 +17,71 @@
       padding: 20px;
     }
     .container {
-      max-width: 1000px;
+      max-width: 1050px;
       margin: 0 auto;
     }
     header {
       text-align: center;
-      margin-bottom: 30px;
-      padding: 25px;
+      margin-bottom: 20px;
+      padding: 20px;
       background: #ffffff;
       border-radius: 12px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
-    h1 { color: #0077b6; margin: 0 0 8px 0; font-size: 2rem; }
-    .subtitle { font-size: 1.2rem; color: #023e8a; font-weight: bold; margin: 0; }
-    h2 { color: #023e8a; margin-top: 0; border-bottom: 2px solid #e0f2fe; padding-bottom: 8px; font-size: 1.5rem; }
-    h3 { color: #0077b6; margin-top: 25px; margin-bottom: 10px; font-size: 1.25rem; }
+    h1 { color: #0077b6; margin: 0 0 6px 0; font-size: 2rem; }
+    .subtitle { font-size: 1.15rem; color: #023e8a; font-weight: bold; margin: 0; }
+    h2 { color: #023e8a; margin-top: 0; border-bottom: 2px solid #e0f2fe; padding-bottom: 8px; font-size: 1.45rem; }
+    h3 { color: #0077b6; margin-top: 25px; margin-bottom: 10px; font-size: 1.2rem; }
     
+    /* STATIONS-NAVIGATION (TABS) */
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 25px;
+      justify-content: center;
+    }
+    .tab-btn {
+      background: #ffffff;
+      color: #0077b6;
+      border: 2px solid #bde0fe;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    }
+    .tab-btn:hover {
+      background: #eef9ff;
+      border-color: #0077b6;
+    }
+    .tab-btn.active {
+      background: #0077b6;
+      color: #ffffff;
+      border-color: #0077b6;
+      box-shadow: 0 4px 10px rgba(0, 119, 182, 0.3);
+    }
+
+    /* EINZELNE SEITEN-ANSICHTEN */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .card {
       background: #ffffff;
       border-radius: 12px;
       padding: 30px;
-      margin-bottom: 35px;
+      margin-bottom: 25px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
     
@@ -50,14 +94,6 @@
       border-radius: 8px;
     }
     .content-img-small { max-width: 420px; }
-    
-    .image-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin: 20px 0;
-      align-items: center;
-    }
     
     .highlight-box {
       background: #eef9ff;
@@ -84,7 +120,7 @@
       border: 2px dashed #ffb300;
       border-radius: 12px;
       padding: 25px;
-      margin-bottom: 35px;
+      margin-bottom: 25px;
     }
     .guess-box h3 { color: #d35400; margin-top: 0; font-size: 1.3rem; }
     .guess-item { margin-bottom: 15px; }
@@ -117,6 +153,32 @@
       border-radius: 6px;
       border-left: 5px solid #2e7d32;
     }
+
+    /* WEITER / ZURÜCK NAVIGATION */
+    .step-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      padding-top: 15px;
+      border-top: 1px solid #e2e8f0;
+    }
+    .btn-step {
+      background: #0077b6;
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-step:hover { background: #023e8a; }
+    .btn-step-secondary {
+      background: #e2e8f0;
+      color: #334155;
+    }
+    .btn-step-secondary:hover { background: #cbd5e1; }
 
     /* HILFE-BOXEN (JOKER / DETEKTIV-TIPPS) */
     .memory-hint-box {
@@ -467,6 +529,7 @@
       .memory-grid { grid-template-columns: repeat(3, 1fr); }
       .memory-card-container { height: 105px; }
       .card-back { font-size: 0.85rem; }
+      .nav-tabs { flex-direction: column; }
     }
   </style>
 </head>
@@ -479,400 +542,459 @@
       <p class="subtitle">Virtuelles Wasser – Dem unsichtbaren auf der Spur</p>
     </header>
 
+    <!-- STATIONS-NAVIGATION (TABS FÜR EINZELNE ANSICHTEN) -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="showTab('text-seite')">📖 1. Infotext & Wissen</button>
+      <button class="tab-btn" onclick="showTab('station1-seite')">🔍 2. Station 1: Wimmelbild</button>
+      <button class="tab-btn" onclick="showTab('station2-seite')">📊 3. Station 2: Wassergiganten</button>
+      <button class="tab-btn" onclick="showTab('station3-seite')">🧠 4. Station 3: Memory & Farb-Check</button>
+    </nav>
+
     <!-- ============================================================== -->
-    <!-- TEIL 1: 1:1 SCHÜLER-INFOTEXT AUS DEM ORIGINAL-DOKUMENT        -->
+    <!-- TAB 1: VOLLSTÄNDIGER SCHÜLER-INFOTEXT                          -->
     <!-- ============================================================== -->
-
-    <!-- SEITE 1 & 2: WO VERSTECKT SICH DAS WASSER? -->
-      <img src="titelbild-erde.PNG" alt="Virtuelles Wasser - Erde mit Wasserhahn" class="content-img">
-
-      <h2>Wo versteckt sich das Wasser?</h2>
-      <p>Wenn du morgens den Wasserhahn aufdrehst, um dir die Zähne zu putzen, ein Glas Wasser trinkst oder unter die Dusche hüpfst, siehst du das Wasser fließen. Das nennen wir direktes Wasser. In Deutschland verbraucht jeder Mensch davon etwa 125 Liter am Tag das ist ungefähr eine volle Badewanne.</p>
+    <div id="text-seite" class="tab-content active">
       
-      <p>Doch das ist nur die Spitze des Eisbergs. In Wahrheit verbraucht jeder von uns jeden Tag fast 4.000 Liter Wasser! Wie kann das sein, wenn wir es doch gar nicht sehen?</p>
-      
-      <p>Die Antwort lautet: Fast alles, was wir essen, anziehen oder benutzen, hat einen unsichtbaren „Wasser-Rucksack“ auf. Um einen Apfel wachsen zu lassen, ein T-Shirt zu nähen oder ein Smartphone zu bauen, werden riesige Mengen Wasser gebraucht, verdunstet oder verschmutzt. Dieses versteckte Wasser nennen Forscher virtuelles Wasser.</p>
+      <section class="card">
+        <img src="titelbild-erde.PNG" alt="Virtuelles Wasser - Erde mit Wasserhahn" class="content-img">
 
+        <h2>Wo versteckt sich das Wasser?</h2>
+        <p>Wenn du morgens den Wasserhahn aufdrehst, um dir die Zähne zu putzen, ein Glas Wasser trinkst oder unter die Dusche hüpfst, siehst du das Wasser fließen. Das nennen wir direktes Wasser. In Deutschland verbraucht jeder Mensch davon etwa 125 Liter am Tag das ist ungefähr eine volle Badewanne.</p>
+        
+        <p>Doch das ist nur die Spitze des Eisbergs. In Wahrheit verbraucht jeder von uns jeden Tag fast 4.000 Liter Wasser! Wie kann das sein, wenn wir es doch gar nicht sehen?</p>
+        
+        <p>Die Antwort lautet: Fast alles, was wir essen, anziehen oder benutzen, hat einen unsichtbaren „Wasser-Rucksack“ auf. Um einen Apfel wachsen zu lassen, ein T-Shirt zu nähen oder ein Smartphone zu bauen, werden riesige Mengen Wasser gebraucht, verdunstet oder verschmutzt. Dieses versteckte Wasser nennen Forscher virtuelles Wasser.</p>
 
-      </div>
+        <h3>Ein Apfel geht auf Reisen</h3>
+        <p>Schau dir einen einfachen Apfel an: Am Baum braucht er monatelang Regen und Grundwasser, damit er saftig wird. Nach der Ernte wird er gewaschen, sortiert und verpackt. Bis er in deiner Brotdose landet, hat ein einziger Apfel etwa 125 Liter Wasser geschluckt" - das ist mehr als ein ganzes Schulfass voll!</p>
+        <img src="apfel.jpg" alt="Apfel am Zweig" class="content-img">
+        <p>Noch viel extremer ist es bei tierischen Lebensmitteln. Eine Kuh frisst im Laufe ihres Lebens riesige Mengen an Getreide und Soja. Diese Futterpflanzen müssen monatelang auf Feldern bewässert werden. Rechnet man das gesamte Futter, das Trinkwasser der Kuh und die Schlachtung zusammen, stecken in nur einem einzigen Kilogramm Rindfleisch über 15.000 Liter Wasser!</p>
 
-      <h3>Ein Apfel geht auf Reisen</h3>
-      <p>Schau dir einen einfachen Apfel an: Am Baum braucht er monatelang Regen und Grundwasser, damit er saftig wird. Nach der Ernte wird er gewaschen, sortiert und verpackt. Bis er in deiner Brotdose landet, hat ein einziger Apfel etwa 125 Liter Wasser geschluckt" - das ist mehr als ein ganzes Schulfass voll!</p>
-              <img src="apfel.jpg" alt="Apfel am Zweig" class="content-img">
-      <p>Noch viel extremer ist es bei tierischen Lebensmitteln. Eine Kuh frisst im Laufe ihres Lebens riesige Mengen an Getreide und Soja. Diese Futterpflanzen müssen monatelang auf Feldern bewässert werden. Rechnet man das gesamte Futter, das Trinkwasser der Kuh und die Schlachtung zusammen, stecken in nur einem einzigen Kilogramm Rindfleisch über 15.000 Liter Wasser!</p>
+        <h3>Die drei Farben des unsichtbaren Wassers</h3>
+        <p>Wasser ist nicht gleich Wasser. Um zu verstehen, wo das virtuelle Wasser herkommt, teilen Forscher es in drei Farben ein:</p>
+        <p><strong>Grünes Wasser:</strong> Das ist natürlicher Regen, der im Boden gespeichert wird und Pflanzen wachsen lässt. Wenn Getreide auf einem fränkischen Feld durch Regen wächst, ist das grünes Wasser. Es schadet der Natur meist nicht.</p>
+        <p><strong>Blaues Wasser:</strong> Das ist Wasser aus Flüssen, Seen oder tief aus der Erde (Grundwasser), das künstlich auf Felder gepumpt wird. Wenn Erdbeeren im trockenen Süden Spaniens oder Baumwolle in der Wüste bewässert werden, fehlt dieses blaue Wasser den Menschen und Tieren vor Ort.</p>
+        <p><strong>Graues Wasser:</strong> Das ist Schmutzwasser. Wenn beim Färben einer Jeans giftige Farben ins Abwasser fließen oder Dünger ins Grundwasser sickert, muss sauberes Wasser hinzukommen, um das Gift zu verdünnen.</p>
 
-      <h3>Die drei Farben des unsichtbaren Wassers</h3>
-      <p>Wasser ist nicht gleich Wasser. Um zu verstehen, wo das virtuelle Wasser herkommt, teilen Forscher es in drei Farben ein:</p>
-      <p><strong>Grünes Wasser:</strong> Das ist natürlicher Regen, der im Boden gespeichert wird und Pflanzen wachsen lässt. Wenn Getreide auf einem fränkischen Feld durch Regen wächst, ist das grünes Wasser. Es schadet der Natur meist nicht.</p>
-      <p><strong>Blaues Wasser:</strong> Das ist Wasser aus Flüssen, Seen oder tief aus der Erde (Grundwasser), das künstlich auf Felder gepumpt wird. Wenn Erdbeeren im trockenen Süden Spaniens oder Baumwolle in der Wüste bewässert werden, fehlt dieses blaue Wasser den Menschen und Tieren vor Ort.</p>
-      <p><strong>Graues Wasser:</strong> Das ist Schmutzwasser. Wenn beim Färben einer Jeans giftige Farben ins Abwasser fließen oder Dünger ins Grundwasser sickert, muss sauberes Wasser hinzukommen, um das Gift zu verdünnen.</p>
+        <img src="jeans-herstellung.jpg" alt="Schema zur Textilherstellung und Wasserfarben" class="content-img">
 
-      <img src="jeans-herstellung.jpg" alt="Schema zur Textilherstellung und Wasserfarben" class="content-img">
-
-      <h3>Was hat deine Jeanshose mit der Wüste zu tun?</h3>
-      <p>Deine Lieblingsjeans wiegt nicht viel - aber bei ihrer Herstellung verbraucht sie unglaubliche 8.000 Liter Wasser! Die Baumwolle wächst oft in sehr trockenen Ländern. Riesige Bewässerungsanlagen saugen dort Flüsse und Seen leer. Ein berühmtes Beispiel ist der riesige Aralsee in Asien: Weil das Wasser für Baumwollfelder abgezweigt wurde, ist ein fast meergroßer See fast vollständig zu einer staubigen Wüste vertrocknet, in der rostige Schiffe im Sand liegen.</p>
+        <h3>Was hat deine Jeanshose mit der Wüste zu tun?</h3>
+        <p>Deine Lieblingsjeans wiegt nicht viel - aber bei ihrer Herstellung verbraucht sie unglaubliche 8.000 Liter Wasser! Die Baumwolle wächst oft in sehr trockenen Ländern. Riesige Bewässerungsanlagen saugen dort Flüsse und Seen leer. Ein berühmtes Beispiel ist der riesige Aralsee in Asien: Weil das Wasser für Baumwollfelder abgezweigt wurde, ist ein fast meergroßer See fast vollständig zu einer staubigen Wüste vertrocknet, in der rostige Schiffe im Sand liegen.</p>
         <img src="aralsee.jpg" alt="Schiffswrack im ausgetrockneten Aralsee" class="content-img">
 
-      <div class="highlight-box">
-        <strong>Infokasten: Die Wassergiganten</strong>
-        <ul>
-          <li>1 kg Rindfleisch &approx; 15.400 l</li>
-          <li>1 Jeans &approx; 8.000 l</li>
-          <li>1 Baumwoll-T-Shirt &approx; 2.500 l</li>
-          <li>1 Tafel Schokolade &approx; 1.700 l</li>
-          <li>1 Apfel &approx; 125 l</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- SEITE 3 & 4: DER WEITE WEG VOM FUTTERTROG INS GLAS -->
-    <section class="card">
-  
-
-      <h2>DER WEITE WEG VOM FUTTERTROG INS GLAS: WARUM SCHNITZEL UND MILCH SO DURSTIG SIND</h2>
-      
-      <h3>Was hat mein Burger mit dem Regenwald zu tun?</h3>
-      <p>Wenn wir an eine Kuh auf einer oberfränkischen Weide denken, sehen wir saftig grünes Gras und frische Luft. Doch die meisten Nutztiere auf der Welt fressen nicht nur Gras, sondern Kraftfutter - vor allem Soja und Getreide.</p>
-        <img src="kuh-feld.png" alt="Kuh vor Sojafeld" class="content-img">
-      <p>Soja ist eine Hülsenfrucht, die besonders viel Eiweiß enthält und Tiere schnell wachsen lässt. Riesige Sojafelder befinden sich in Südamerika, etwa in Brasilien. Um dort Platz für Felder zu schaffen, werden wertvolle Regenwälder gerodet. Bis das Soja geerntet, zu Futterpellets verarbeitet und mit Frachtschiffen über die Ozeane zu uns transportiert wird, sind gewaltige Mengen Regen- und Bewässerungswasser verbraucht worden.</p>
-      
-      <img src="maehdrescher.jpg" alt="Mähdrescher auf Sojafeld mit Frachtschiff" class="content-img">
-      <p><em>Kraftfutter für die Welt: Millionen Tonnen Soja werden jedes Jahr bewässert und geerntet, um als Tierfutter nach Europa transportiert zu werden.</em></p>
-
-      <h3>Die Rechnung der Wassergiganten</h3>
-      <p>Eine Kuh trinkt an einem heißen Sommertag zwar beachtliche 100 Liter Wasser, doch das eigentliche Wasser steckt im Futtertrog. Eine Mastkuh frisst tausende Kilogramm Getreide und Soja, bevor aus ihr Fleisch wird:</p>
-      <ul>
-        <li>&rarr; 1 Kilogramm Rindfleisch benötigt im globalen Schnitt rund 15.400 Liter Wasser. Das sind über 100 voll gefüllte Badewannen für nur ein einziges Kilo Fleisch!</li>
-        <li>&rarr; 1 Kilogramm Schweinefleisch schlägt mit rund 6.000 Litern Wasser zu Buche.</li>
-        <li>&rarr; 1 Kilogramm Geflügelfleisch verbraucht etwa 4.300 Liter Wasser.</li>
-      </ul>
-      <p>Pflanzliche Lebensmittel wie Kartoffeln (ca. 290 Liter pro kg) oder heimisches Gemüse schneiden im Vergleich um ein Vielfaches wassersparender ab, da der Umweg über das Tierfutter entfällt.</p>
-
-      <img src="milch-kaese-hafer.jpg" alt="Kuhmilch, Käse und Haferdrink im Vergleich" class="content-img content-img-small">
-
-      <h3>Wie viel Wasser steckt im Glas Milch?</h3>
-      <p>Auch Milch und Milchprodukte sind echte Wasserspeicher:</p>
-      <p>In 1 Liter Kuhmilch stecken im Schnitt rund 1.000 Liter virtuelles Wasser (für Futter, Stallreinigung und Verarbeitung).</p>
-      <p>Für 1 Kilogramm Schnittkäse werden rund 5.000 Liter Wasser benötigt, da man für ein einziges Kilo Käse etwa 10 Liter Milch eindicken muss.</p>
-      <p>Pflanzliche Alternativen wie Hafermilch aus heimischem Anbau schneiden deutlich besser ab: Ein Liter Haferdrink verbraucht nur etwa 30 bis 50 Liter Wasser.</p>
-    </section>
-
-    <!-- SEITE 5: WASSERDETEKTIVE IM EINSATZ -->
-    <section class="card">
-      <img src="papierschoepfen-anleitung.jpg" alt="Anleitung Papierschöpfen" class="content-img">
-
-      <h2>Wasserdetektive im Einsatz</h2>
-      <p class="subtitle">Wie du mit kleinen Schritten riesige Wellen schlägst</p>
-      
-      <h3>Warum dein Schulheft ein echter Wasserspeicher ist</h3>
-      <p>Für ein einziges Blatt frisches, weißes Papier aus neuen Holzfasern werden in der Fabrik bis zu 10 Liter Wasser benötigt - das ist ein ganzer Putzeimer voll! Denn das Holz muss mit viel Wasser und Chemie gekocht, gebleicht und ausgewaschen werden.</p>
-      <p>Bei Recyclingpapier (aus alten Zeitungen oder Kartons) sind die Papierfasern schon fertig. Man braucht sie nur im Wasser aufzuweichen und neu zu formen. Das spart über 70% Wasser und jede Menge Energie. Wenn deine ganze Klasse Hefte mit dem Umweltzeichen „Blauer Engel" nutzt, rettet ihr jedes Schuljahr tausende Liter sauberes Trinkwasser!</p>
-
-      </div>
-
-      <h3>Du hast die Wahl: Dein täglicher Wasser-Fußabdruck</h3>
-      <p>Virtuelles Wasser lässt sich nicht einfach am Hahn abdrehen aber du kannst jeden Tag mit deinen Entscheidungen bestimmen, wie viel Wasser auf der Welt verbraucht wird. Niemand muss perfekt sein oder auf alles verzichten. Wenn viele Menschen kleine Dinge verändern, spart das Millionen Liter wertvolles Trink- und Grundwasser.</p>
-
-      <div class="experiment-box">
-        <h3>Die eigene Papier-Fabrik - Papier schöpfen und Wasser sparen</h3>
-        <p><strong>Was du brauchst:</strong> 2 Seiten altes Zeitungspapier oder 1 Eierkarton, warmes Wasser, 1 große flache Schüssel oder Wanne, Pürierstab, 1 feines Küchensieb (oder ein Stück Fliegengitter auf einem Rahmen), 1 Geschirrtuch, 1 Nudelholz.</p>
-        
-        <p><strong>Und so geht's:</strong></p>
-        <ol>
-          <li>Zerreiß das Altpapier in winzige Schnipsel und weiche sie in einer Schüssel mit warmem Wasser für 15 Minuten ein.</li>
-          <li>Püriere die Schnipsel mit dem Pürierstab zu einem gleichmäßigen, breiigen Faserbrei (Pulpe). Gib bei Bedarf etwas Wasser dazu.</li>
-          <li>Fülle die Wanne mit Wasser und rühre zwei Hände voll Brei hinein. Tauche das Sieb flach auf den Grund und hebe es waagerecht an, sodass sich eine gleichmäßige Faserschicht auf dem Gitter absetzt.</li>
-          <li>Lass das Wasser abtropfen. Stürze das nasse Papierblatt auf ein Geschirrtuch, decke es ab und rolle mit dem Nudelholz das restliche Wasser heraus. Lass dein Papier an der Luft trocknen.</li>
-        </ol>
-        <p><strong>Erklärung:</strong> Die Papierfasern verhaken sich im Wasser von ganz alleine miteinander. Das abgetropfte Wasser in der Wanne ist nicht verloren man kann darin direkt das nächste Blatt schöpfen! Bei echtem Recyclingpapier geht kaum Wasser verloren, während bei neuem Papier aus Holzstämmen gigantische Mengen Frischwasser verbraucht und verschmutzt werden.</p>
-      </div>
-    </section>
-
-    <!-- ============================================================== -->
-    <!-- TEIL 2: SCHÄTZ-ECKEN & DIE 3 INTERAKTIVEN STATIONEN            -->
-    <!-- ============================================================== -->
-
-    <!-- SCHÄTZ-ECKE 1 VOR STATION 1 -->
-    <section class="guess-box">
-      <h3>🤔 Schätz-Ecke 1: Wasserdetektiv-Start</h3>
-      <p>Bevor du das Wimmelbild erkundest: Wie viel virtuelles Wasser schätzt du in diesen alltäglichen Dingen?</p>
-      
-      <div class="guess-item">
-        <label>1. In <strong>1 Tasse Kaffee</strong> (Bohnenanbau & Röstung): </label><br>
-        <input type="number" id="guessCoffee" placeholder="z. B. 50"> Liter
-      </div>
-
-      <div class="guess-item">
-        <label>2. In <strong>1 Hühnerei</strong> (Futter für das Huhn): </label><br>
-        <input type="number" id="guessEgg" placeholder="z. B. 80"> Liter
-      </div>
-
-      <div class="guess-item">
-        <label>3. In <strong>1 Smartphone</strong> (Metalle, Chips & Fabriken): </label><br>
-        <input type="number" id="guessPhone" placeholder="z. B. 3000"> Liter
-      </div>
-
-      <button class="btn-action" onclick="document.getElementById('solutionBox1').style.display='block'">Schätzungen prüfen & Auflösung anzeigen</button>
-
-      <div id="solutionBox1" class="solution">
-        <strong>🔍 Auflösung:</strong>
-        <ul>
-          <li><strong>1 Tasse Kaffee:</strong> ca. 130 bis 140 Liter (entspricht fast einer ganzen Badewanne für nur eine Tasse!)</li>
-          <li><strong>1 Hühnerei:</strong> ca. 200 Liter (rund 1,5 Badewannen voll Wasser für das Hühnerfutter)</li>
-          <li><strong>1 Smartphone:</strong> ca. 12.000 Liter (über 80 Badewannen für seltene Erden und Chipproduktion!)</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- STATION 1: WIMMELBILD MIT PASSENDEN HOTSPOTS -->
-    <section class="card">
-      <h2>Station 1: Wimmelbild – Wo versteckt sich virtuelles Wasser?</h2>
-      <p>Klicke auf die roten Punkte auf dem Tisch, um den versteckten Wasserverbrauch der Dinge aufzudecken:</p>
-      
-      <div class="hotspot-container">
-        <img src="wimmelbild.jpg" alt="Wimmelbild Virtuelles Wasser auf dem Küchentisch">
-        
-        <!-- ALLE 30 INTERAKTIVEN OBJEKTE AUS DEINEM ORIGINAL-WIMMELBILD -->
-        <div class="hotspot-pin" style="top: 53%; left: 7%;" onclick="showHotspot('🍇 Weintrauben (1 kg)', 'ca. 870 Liter Wasser für Rebenanbau und Bewässerung in sonnigen Regionen.')">1</div>
-        <div class="hotspot-pin" style="top: 45%; left: 16%;" onclick="showHotspot('🍓 Erdbeeren (500 g)', 'ca. 140 Liter Wasser – besonders viel Grundwasser bei künstlicher Bewässerung in Südeuropa.')">2</div>
-        <div class="hotspot-pin" style="top: 55%; left: 16%;" onclick="showHotspot('🍎 1 Apfel', 'ca. 125 Liter Wasser für Baumwachstum, Reife, Waschen und Verpacken.')">3</div>
-        <div class="hotspot-pin" style="top: 58%; left: 19%;" onclick="showHotspot('🍌 1 Banane', 'ca. 160 Liter Wasser für tropischen Anbau und weltweiten Transport.')">4</div>
-        <div class="hotspot-pin" style="top: 65%; left: 9%;" onclick="showHotspot('🍅 Tomaten (1 kg)', 'ca. 214 Liter Wasser – oft intensiv künstlich im Gewächshaus oder in Trockengebieten bewässert.')">5</div>
-        <div class="hotspot-pin" style="top: 72%; left: 21%;" onclick="showHotspot('🥕 Karotten (1 kg)', 'ca. 257 Liter Wasser – schneiden als heimisches Wurzelgemüse sehr wassersparend ab.')">6</div>
-        <div class="hotspot-pin" style="top: 63%; left: 33%;" onclick="showHotspot('🥒 Salatgurke', 'ca. 35 Liter Wasser – besteht selbst zu 96% aus Wasser und wächst meist regional.')">7</div>
-        <div class="hotspot-pin" style="top: 27%; left: 38%;" onclick="showHotspot('🥬 Kopfsalat', 'ca. 240 Liter pro Kilogramm – benötigt regelmäßige Bewässerung.')">8</div>
-        <div class="hotspot-pin" style="top: 36%; left: 22%;" onclick="showHotspot('🍊 Orangensaft (1 Liter)', 'ca. 850 Liter Wasser – für den Anbau sonnenhungriger Orangen in Spanien oder Brasilien.')">9</div>
-        <div class="hotspot-pin" style="top: 49%; left: 23%;" onclick="showHotspot('🥜 Walnüsse (100 g)', 'ca. 900 Liter Wasser – Nussbäume haben einen enorm hohen Wasserbedarf!')">10</div>
-        <div class="hotspot-pin" style="top: 44%; left: 27%;" onclick="showHotspot('🥣 Joghurt (250 g)', 'ca. 300 Liter Wasser – überwiegend für das Futter der Milchkuh.')">11</div>
-        <div class="hotspot-pin" style="top: 33%; left: 30%;" onclick="showHotspot('🧀 Quark / Frischkäse (250 g)', 'ca. 600 Liter Wasser – für die Eindickung großer Mengen Kuhmilch.')">12</div>
-        <div class="hotspot-pin" style="top: 40%; left: 36%;" onclick="showHotspot('🧀 Schnittkäse (1 kg)', 'ca. 5.000 Liter Wasser – da man rund 10 Liter Milch für 1 kg Käse benötigt!')">13</div>
-        <div class="hotspot-pin" style="top: 46%; left: 44%;" onclick="showHotspot('🧈 Butter (250 g)', 'ca. 1.400 Liter Wasser – für die Rahmgewinnung aus vielen Litern Milch.')">14</div>
-        <div class="hotspot-pin" style="top: 35%; left: 45%;" onclick="showHotspot('🍝 Nudeln / Pasta (500 g)', 'ca. 925 Liter Wasser – vor allem für Hartweizenanbau und Mahlvorgänge.')">15</div>
-        <div class="hotspot-pin" style="top: 29%; left: 52%;" onclick="showHotspot('🥖 Brotkorb (1 Laib Brot)', 'ca. 1.600 Liter Wasser – für Getreideanbau, Mühle und Backprozess.')">16</div>
-        <div class="hotspot-pin" style="top: 40%; left: 52%;" onclick="showHotspot('🥔 Kartoffeln (1 kg)', 'ca. 290 Liter Wasser – eine der wassersparendsten Beilagen überhaupt!')">17</div>
-        <div class="hotspot-pin" style="top: 58%; left: 43%;" onclick="showHotspot('🍫 1 Tafel Schokolade (100 g)', 'ca. 1.700 Liter Wasser – für den durstigen Kakaoanbau in Westafrika.')">18</div>
-        <div class="hotspot-pin" style="top: 52%; left: 34%;" onclick="showHotspot('🍗 Geflügelfleisch (1 kg)', 'ca. 4.300 Liter Wasser – für Hühnerfutter (Getreide & Soja) und Haltung.')">19</div>
-        <div class="hotspot-pin" style="top: 53%; left: 51%;" onclick="showHotspot('🌰 Mandeln (100 g)', 'ca. 1.600 Liter Wasser – Mandelhaine in Kalifornien verbrauchen gigantische Grundwassermengen.')">20</div>
-        <div class="hotspot-pin" style="top: 35%; left: 62%;" onclick="showHotspot('🥛 1 Liter Kuhmilch', 'ca. 1.000 Liter Wasser – für Futter, Tränke und Stallreinigung.')">21</div>
-        <div class="hotspot-pin" style="top: 48%; left: 61%;" onclick="showHotspot('🥩 1 kg Rindfleisch', 'ca. 15.400 Liter Wasser – der absolute Spitzenreiter unter den Lebensmitteln!')">22</div>
-        <div class="hotspot-pin" style="top: 41%; left: 71%;" onclick="showHotspot('🥚 1 Hühnerei', 'ca. 200 Liter Wasser – rund 1,5 Badewannen voll für Futteranbau und Haltung.')">23</div>
-        <div class="hotspot-pin" style="top: 65%; left: 57%;" onclick="showHotspot('📖 Aufgeschlagenes Schulheft', 'ca. 10 Liter Frischwasser pro Blatt beim Kochen & Bleichen von Holzfasern.')">24</div>
-        <div class="hotspot-pin" style="top: 55%; left: 73%;" onclick="showHotspot('📚 Bücherstapel', 'ca. 800 bis 1.200 Liter Wasser für Druck, Leimung und Papierherstellung.')">25</div>
-        <div class="hotspot-pin" style="top: 75%; left: 43%;" onclick="showHotspot('✏️ Buntstifte & Hefte', 'ca. 150 Liter Wasser für Holzverarbeitung, Farbpigmente und Bindemittel.')">26</div>
-        <div class="hotspot-pin" style="top: 74%; left: 64%;" onclick="showHotspot('📏 Lineal & Radiergummi', 'ca. 80 Liter Wasser – für Kautschukgewinnung, Holzfräsung und Veredelung.')">27</div>
-        <div class="hotspot-pin" style="top: 82%; left: 75%;" onclick="showHotspot('🎒 Schulrucksack', 'ca. 3.500 Liter Wasser für Kunstfasern (Polyester/Nylon), Färben und Beschichtung.')">28</div>
-        <div class="hotspot-pin" style="top: 37%; left: 89%;" onclick="showHotspot('👕 Weißes T-Shirt', 'ca. 2.500 Liter Wasser für Baumwollanbau, Entkörnung und Spinnereien.')">29</div>
-        <div class="hotspot-pin" style="top: 62%; left: 88%;" onclick="showHotspot('👖 Jeanshose', 'ca. 8.000 Liter Wasser – riesige Bewässerungsmengen und giftiges Grauwasser beim Färben.')">30</div>
-      </div>
-
-      <div id="hotspotInfo" class="hotspot-info"></div>
-    </section>
-
-    <!-- SCHÄTZ-ECKE 2 VOR STATION 2 -->
-    <section class="guess-box">
-      <h3>🤔 Schätz-Ecke 2: Vorbereitung auf den Wassergiganten-Check</h3>
-      <p>Hier sind 4 neue Produkte. Welches verbraucht wohl am meisten Wasser und welches am wenigsten? Schätze die Liter:</p>
-      
-      <div class="guess-item">
-        <label>1. In <strong>1 Banane</strong> (Bewässerung & Transport): </label><br>
-        <input type="number" id="guessBanana" placeholder="z. B. 100"> Liter
-      </div>
-
-      <div class="guess-item">
-        <label>2. In <strong>1 Pizza Margherita</strong> (Mehl, Tomaten, Käse): </label><br>
-        <input type="number" id="guessPizza" placeholder="z. B. 500"> Liter
-      </div>
-
-      <div class="guess-item">
-        <label>3. In <strong>1 Hamburger</strong> (Rindfleisch, Brötchen, Salat): </label><br>
-        <input type="number" id="guessBurger" placeholder="z. B. 1000"> Liter
-      </div>
-
-      <div class="guess-item">
-        <label>4. In <strong>1 Paar Lederschuhen</strong> (Rinderhaltung & Gerbung): </label><br>
-        <input type="number" id="guessShoes" placeholder="z. B. 4000"> Liter
-      </div>
-
-      <button class="btn-action" onclick="document.getElementById('solutionBox2').style.display='block'">Rangfolge & Liter anzeigen</button>
-
-      <div id="solutionBox2" class="solution">
-        <strong>🔍 Die echte Rangfolge vom kleinsten zum größten Wassergiganten:</strong>
-        <ol>
-          <li><strong>Platz 4: 1 Banane:</strong> ca. 160 Liter</li>
-          <li><strong>Platz 3: 1 Pizza Margherita:</strong> ca. 1.250 Liter (vor allem wegen des Käses!)</li>
-          <li><strong>Platz 2: 1 Hamburger:</strong> ca. 2.400 Liter (durch das Rindfleisch-Patty)</li>
-          <li><strong>Platz 1: 1 Paar Lederschuhe:</strong> ca. 15.000 Liter (Leder benötigt riesige Mengen Wasser für Gerbung und Tierhaltung!)</li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- STATION 2: WASSERGIGANTEN-CHECK (ORIGINAL H5P DRAG & DROP) -->
-    <section class="card">
-      <h2>Station 2: Wassergiganten-Check</h2>
-      <p>Ordne die Produkte nach ihrem virtuellen Wasserverbrauch ein (Ziehe die Kärtchen mit der Maus in die Felder):</p>
-
-      <div class="h5p-drag-board">
-        <div class="ranking-header">
-          Wasserschule Oberfranken: Das große Wasser-Ranking
-        </div>
-
-        <div id="dragPool" class="drag-pool" ondragover="allowDrop(event)" ondrop="dropToPool(event)">
-          <div class="drag-card" draggable="true" id="item_steak" data-correct="slot_5" ondragstart="drag(event)">
-            <img src="steak.png" alt="Steak">
-          </div>
-          <div class="drag-card" draggable="true" id="item_apple" data-correct="slot_1" ondragstart="drag(event)">
-            <img src="aepfel.png" alt="Apfel">
-          </div>
-          <div class="drag-card" draggable="true" id="item_jeans" data-correct="slot_4" ondragstart="drag(event)">
-            <img src="jeans.png" alt="Jeans">
-          </div>
-          <div class="drag-card" draggable="true" id="item_bread" data-correct="slot_2" ondragstart="drag(event)">
-            <img src="brot.png" alt="Brot">
-          </div>
-          <div class="drag-card" draggable="true" id="item_tshirt" data-correct="slot_3" ondragstart="drag(event)">
-            <img src="tshirt.png" alt="T-Shirt">
-          </div>
-        </div>
-
-        <div class="scale-bar"></div>
-        <div class="scale-labels">
-          <span>Geringster Wasserverbrauch</span>
-          <span>Höchster Wasserverbrauch</span>
-        </div>
-
-        <div class="slots-container">
-          <div class="slot-column slot-blue">
-            <div class="slot-pill pill-blue">Platz 1</div>
-            <div class="drop-zone" id="slot_1" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
-            <div class="slot-footer-text text-blue">Wenigstes Wasser</div>
-            <span class="slot-badge" id="badge_1"></span>
-          </div>
-
-          <div class="slot-column slot-blue">
-            <div class="slot-pill pill-blue">Platz 2</div>
-            <div class="drop-zone" id="slot_2" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
-            <div class="slot-footer-text text-blue">Gering</div>
-            <span class="slot-badge" id="badge_2"></span>
-          </div>
-
-          <div class="slot-column slot-blue">
-            <div class="slot-pill pill-blue">Platz 3</div>
-            <div class="drop-zone" id="slot_3" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
-            <div class="slot-footer-text text-blue">Mittel</div>
-            <span class="slot-badge" id="badge_3"></span>
-          </div>
-
-          <div class="slot-column slot-blue">
-            <div class="slot-pill pill-blue">Platz 4</div>
-            <div class="drop-zone" id="slot_4" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
-            <div class="slot-footer-text text-blue">Viel</div>
-            <span class="slot-badge" id="badge_4"></span>
-          </div>
-
-          <div class="slot-column slot-red">
-            <div class="slot-pill pill-red">Platz 5</div>
-            <div class="drop-zone" id="slot_5" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
-            <div class="slot-footer-text text-red">Meistes Wasser</div>
-            <span class="slot-badge" id="badge_5"></span>
-          </div>
-        </div>
-
-        <div class="ranking-action-bar">
-          <button class="btn-check-ranking" onclick="checkRankingH5P()">Überprüfen</button>
-          <button class="btn-retry" onclick="resetRankingH5P()">🔄 Wiederholen</button>
-          <span id="scoreDisplay" class="score-display"></span>
-        </div>
-      </div>
-    </section>
-
-    <!-- STATION 3: FARB-CHECK, JOKER-HILFEN & PROFI-MEMORY -->
-    <section class="card">
-      <h2>Station 3: Farb-Check & Memory-Finale</h2>
-      
-      <!-- LEVEL 1: JUNIOR-TRAINER -->
-      <div class="junior-trainer" style="background:#fdf8e2; border:2px solid #f39c12; border-radius:10px; padding:20px; margin-bottom:25px;">
-        <h3 style="color: #d35400; margin-top: 0;">🟢🔵⚪ Level 1: Junior-Trainer (Farb-Zuordnung)</h3>
-        <p>Welche Wasser-Farbe passt? Klicke auf die richtige Farbe und teste dein Wissen sofort:</p>
-        
-        <div class="trainer-card">
-          <span>1. 🌧️ Ein <strong>Regenschauer</strong> lässt das Weizenfeld in Franken wachsen:</span>
-          <div class="trainer-btns">
-            <button class="btn-g" onclick="checkTrainer(1, 'green')">Grün</button>
-            <button class="btn-b" onclick="checkTrainer(1, 'blue')">Blau</button>
-            <button class="btn-gr" onclick="checkTrainer(1, 'gray')">Grau</button>
-            <span id="fb1" class="trainer-feedback"></span>
-          </div>
-        </div>
-
-        <div class="trainer-card">
-          <span>2. 🚰 Riesige <strong>Sprinkler-Anlagen</strong> pumpen Flusswasser auf ein Erdbeerfeld in Spanien:</span>
-          <div class="trainer-btns">
-            <button class="btn-g" onclick="checkTrainer(2, 'green')">Grün</button>
-            <button class="btn-b" onclick="checkTrainer(2, 'blue')">Blau</button>
-            <button class="btn-gr" onclick="checkTrainer(2, 'gray')">Grau</button>
-            <span id="fb2" class="trainer-feedback"></span>
-          </div>
-        </div>
-
-        <div class="trainer-card">
-          <span>3. 👖 In einer Fabrik fließt <strong>giftige Textilfarbe</strong> ins Abwasser:</span>
-          <div class="trainer-btns">
-            <button class="btn-g" onclick="checkTrainer(3, 'green')">Grün</button>
-            <button class="btn-b" onclick="checkTrainer(3, 'blue')">Blau</button>
-            <button class="btn-gr" onclick="checkTrainer(3, 'gray')">Grau</button>
-            <span id="fb3" class="trainer-feedback"></span>
-          </div>
-        </div>
-
-        <div class="trainer-card">
-          <span>4. 🚜 Ein Bauer spritzt <strong>Kunstdünger</strong>, der ins Grundwasser sickert:</span>
-          <div class="trainer-btns">
-            <button class="btn-g" onclick="checkTrainer(4, 'green')">Grün</button>
-            <button class="btn-b" onclick="checkTrainer(4, 'blue')">Blau</button>
-            <button class="btn-gr" onclick="checkTrainer(4, 'gray')">Grau</button>
-            <span id="fb4" class="trainer-feedback"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- LEVEL 2: PROFI-MEMORY MIT DETEKTIV-JOKER -->
-      <h3 style="color: #0077b6;">🧠 Level 2: Profi-Memory-Spiel</h3>
-      <p>Finde alle 6 zusammengehörenden Paare:</p>
-
-      <!-- AUFKLAPPBARER DETEKTIV-JOKER -->
-      <details class="memory-hint-box">
-        <summary>💡 Detektiv-Joker & Denkstützen öffnen (Hier klicken)</summary>
-        <div class="memory-hint-content">
-          <strong style="color: #6a1b9a;">Die Farb-Merkbrücken:</strong>
-          <ul style="margin-bottom: 12px;">
-            <li>🌱 <strong>Grünes Wasser:</strong> Natürlicher Regen auf Felder und Wiesen.</li>
-            <li>🚰 <strong>Blaues Wasser:</strong> Künstlich gepumptes Wasser (Brunnen, Leitungen, Schläuche).</li>
-            <li>🧪 <strong>Graues Wasser:</strong> Schmutzwasser durch Farben, Dünger oder Industrie.</li>
+        <div class="highlight-box">
+          <strong>Infokasten: Die Wassergiganten</strong>
+          <ul>
+            <li>1 kg Rindfleisch &approx; 15.400 l</li>
+            <li>1 Jeans &approx; 8.000 l</li>
+            <li>1 Baumwoll-T-Shirt &approx; 2.500 l</li>
+            <li>1 Tafel Schokolade &approx; 1.700 l</li>
+            <li>1 Apfel &approx; 125 l</li>
           </ul>
-          <div style="background: #fdf2e9; border-left: 4px solid #e67e22; padding: 10px; border-radius: 4px; font-size: 0.95rem;">
-            ⚠️ <strong>Achtung Stolperfalle:</strong> Künstlich bewässerte Pflanzen zählen als <strong>blaues Wasser</strong>, nicht als grünes Wasser!
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>DER WEITE WEG VOM FUTTERTROG INS GLAS: WARUM SCHNITZEL UND MILCH SO DURSTIG SIND</h2>
+        
+        <h3>Was hat mein Burger mit dem Regenwald zu tun?</h3>
+        <p>Wenn wir an eine Kuh auf einer oberfränkischen Weide denken, sehen wir saftig grünes Gras und frische Luft. Doch die meisten Nutztiere auf der Welt fressen nicht nur Gras, sondern Kraftfutter - vor allem Soja und Getreide.</p>
+        <img src="kuh-feld.png" alt="Kuh vor Sojafeld" class="content-img">
+        <p>Soja ist eine Hülsenfrucht, die besonders viel Eiweiß enthält und Tiere schnell wachsen lässt. Riesige Sojafelder befinden sich in Südamerika, etwa in Brasilien. Um dort Platz für Felder zu schaffen, werden wertvolle Regenwälder gerodet. Bis das Soja geerntet, zu Futterpellets verarbeitet und mit Frachtschiffen über die Ozeane zu uns transportiert wird, sind gewaltige Mengen Regen- und Bewässerungswasser verbraucht worden.</p>
+        
+        <img src="maehdrescher.jpg" alt="Mähdrescher auf Sojafeld mit Frachtschiff" class="content-img">
+        <p><em>Kraftfutter für die Welt: Millionen Tonnen Soja werden jedes Jahr bewässert und geerntet, um als Tierfutter nach Europa transportiert zu werden.</em></p>
+
+        <h3>Die Rechnung der Wassergiganten</h3>
+        <p>Eine Kuh trinkt an einem heißen Sommertag zwar beachtliche 100 Liter Wasser, doch das eigentliche Wasser steckt im Futtertrog. Eine Mastkuh frisst tausende Kilogramm Getreide und Soja, bevor aus ihr Fleisch wird:</p>
+        <ul>
+          <li>&rarr; 1 Kilogramm Rindfleisch benötigt im globalen Schnitt rund 15.400 Liter Wasser. Das sind über 100 voll gefüllte Badewannen für nur ein einziges Kilo Fleisch!</li>
+          <li>&rarr; 1 Kilogramm Schweinefleisch schlägt mit rund 6.000 Litern Wasser zu Buche.</li>
+          <li>&rarr; 1 Kilogramm Geflügelfleisch verbraucht etwa 4.300 Liter Wasser.</li>
+        </ul>
+        <p>Pflanzliche Lebensmittel wie Kartoffeln (ca. 290 Liter pro kg) oder heimisches Gemüse schneiden im Vergleich um ein Vielfaches wassersparender ab, da der Umweg über das Tierfutter entfällt.</p>
+
+        <img src="milch-kaese-hafer.jpg" alt="Kuhmilch, Käse und Haferdrink im Vergleich" class="content-img content-img-small">
+
+        <h3>Wie viel Wasser steckt im Glas Milch?</h3>
+        <p>Auch Milch und Milchprodukte sind echte Wasserspeicher:</p>
+        <p>In 1 Liter Kuhmilch stecken im Schnitt rund 1.000 Liter virtuelles Wasser (für Futter, Stallreinigung und Verarbeitung).</p>
+        <p>Für 1 Kilogramm Schnittkäse werden rund 5.000 Liter Wasser benötigt, da man für ein einziges Kilo Käse etwa 10 Liter Milch eindicken muss.</p>
+        <p>Pflanzliche Alternativen wie Hafermilch aus heimischem Anbau schneiden deutlich besser ab: Ein Liter Haferdrink verbraucht nur etwa 30 bis 50 Liter Wasser.</p>
+      </section>
+
+      <section class="card">
+        <img src="papierschoepfen-anleitung.jpg" alt="Anleitung Papierschöpfen" class="content-img">
+
+        <h2>Wasserdetektive im Einsatz</h2>
+        <p class="subtitle">Wie du mit kleinen Schritten riesige Wellen schlägst</p>
+        
+        <h3>Warum dein Schulheft ein echter Wasserspeicher ist</h3>
+        <p>Für ein einziges Blatt frisches, weißes Papier aus neuen Holzfasern werden in der Fabrik bis zu 10 Liter Wasser benötigt - das ist ein ganzer Putzeimer voll! Denn das Holz muss mit viel Wasser und Chemie gekocht, gebleicht und ausgewaschen werden.</p>
+        <p>Bei Recyclingpapier (aus alten Zeitungen oder Kartons) sind die Papierfasern schon fertig. Man braucht sie nur im Wasser aufzuweichen und neu zu formen. Das spart über 70% Wasser und jede Menge Energie. Wenn deine ganze Klasse Hefte mit dem Umweltzeichen „Blauer Engel" nutzt, rettet ihr jedes Schuljahr tausende Liter sauberes Trinkwasser!</p>
+
+        <h3>Du hast die Wahl: Dein täglicher Wasser-Fußabdruck</h3>
+        <p>Virtuelles Wasser lässt sich nicht einfach am Hahn abdrehen aber du kannst jeden Tag mit deinen Entscheidungen bestimmen, wie viel Wasser auf der Welt verbraucht wird. Niemand muss perfekt sein oder auf alles verzichten. Wenn viele Menschen kleine Dinge verändern, spart das Millionen Liter wertvolles Trink- und Grundwasser.</p>
+
+        <div class="experiment-box">
+          <h3>Die eigene Papier-Fabrik - Papier schöpfen und Wasser sparen</h3>
+          <p><strong>Was du brauchst:</strong> 2 Seiten altes Zeitungspapier oder 1 Eierkarton, warmes Wasser, 1 große flache Schüssel oder Wanne, Pürierstab, 1 feines Küchensieb (oder ein Stück Fliegengitter auf einem Rahmen), 1 Geschirrtuch, 1 Nudelholz.</p>
+          
+          <p><strong>Und so geht's:</strong></p>
+          <ol>
+            <li>Zerreiß das Altpapier in winzige Schnipsel und weiche sie in einer Schüssel mit warmem Wasser für 15 Minuten ein.</li>
+            <li>Püriere die Schnipsel mit dem Pürierstab zu einem gleichmäßigen, breiigen Faserbrei (Pulpe). Gib bei Bedarf etwas Wasser dazu.</li>
+            <li>Fülle die Wanne mit Wasser und rühre zwei Hände voll Brei hinein. Tauche das Sieb flach auf den Grund und hebe es waagerecht an, sodass sich eine gleichmäßige Faserschicht auf dem Gitter absetzt.</li>
+            <li>Lass das Wasser abtropfen. Stürze das nasse Papierblatt auf ein Geschirrtuch, decke es ab und rolle mit dem Nudelholz das restliche Wasser heraus. Lass dein Papier an der Luft trocknen.</li>
+          </ol>
+          <p><strong>Erklärung:</strong> Die Papierfasern verhaken sich im Wasser von ganz alleine miteinander. Das abgetropfte Wasser in der Wanne ist nicht verloren man kann darin direkt das nächste Blatt schöpfen! Bei echtem Recyclingpapier geht kaum Wasser verloren, während bei neuem Papier aus Holzstämmen gigantische Mengen Frischwasser verbraucht und verschmutzt werden.</p>
+        </div>
+
+        <div class="step-nav">
+          <div></div>
+          <button class="btn-step" onclick="showTab('station1-seite')">Weiter zu Station 1 ➔</button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: STATION 1 – WIMMELBILD & SCHÄTZ-ECKE 1                  -->
+    <!-- ============================================================== -->
+    <div id="station1-seite" class="tab-content">
+      
+      <section class="guess-box">
+        <h3>🤔 Schätz-Ecke 1: Wasserdetektiv-Start</h3>
+        <p>Bevor du das Wimmelbild erkundest: Wie viel virtuelles Wasser schätzt du in diesen alltäglichen Dingen?</p>
+        
+        <div class="guess-item">
+          <label>1. In <strong>1 Tasse Kaffee</strong> (Bohnenanbau & Röstung): </label><br>
+          <input type="number" id="guessCoffee" placeholder="z. B. 50"> Liter
+        </div>
+
+        <div class="guess-item">
+          <label>2. In <strong>1 Hühnerei</strong> (Futter für das Huhn): </label><br>
+          <input type="number" id="guessEgg" placeholder="z. B. 80"> Liter
+        </div>
+
+        <div class="guess-item">
+          <label>3. In <strong>1 Smartphone</strong> (Metalle, Chips & Fabriken): </label><br>
+          <input type="number" id="guessPhone" placeholder="z. B. 3000"> Liter
+        </div>
+
+        <button class="btn-action" onclick="document.getElementById('solutionBox1').style.display='block'">Schätzungen prüfen & Auflösung anzeigen</button>
+
+        <div id="solutionBox1" class="solution">
+          <strong>🔍 Auflösung:</strong>
+          <ul>
+            <li><strong>1 Tasse Kaffee:</strong> ca. 130 bis 140 Liter (entspricht fast einer ganzen Badewanne für nur eine Tasse!)</li>
+            <li><strong>1 Hühnerei:</strong> ca. 200 Liter (rund 1,5 Badewannen voll Wasser für das Hühnerfutter)</li>
+            <li><strong>1 Smartphone:</strong> ca. 12.000 Liter (über 80 Badewannen für seltene Erden und Chipproduktion!)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Station 1: Wimmelbild – Wo versteckt sich virtuelles Wasser?</h2>
+        <p>Klicke auf die roten Punkte auf dem Tisch, um den versteckten Wasserverbrauch der Dinge aufzudecken:</p>
+        
+        <div class="hotspot-container">
+          <img src="wimmelbild.jpg" alt="Wimmelbild Virtuelles Wasser auf dem Küchentisch">
+          
+          <!-- ALLE 30 INTERAKTIVEN OBJEKTE AUS DEINEM ORIGINAL-WIMMELBILD -->
+          <div class="hotspot-pin" style="top: 53%; left: 7%;" onclick="showHotspot('🍇 Weintrauben (1 kg)', 'ca. 870 Liter Wasser für Rebenanbau und Bewässerung in sonnigen Regionen.')">1</div>
+          <div class="hotspot-pin" style="top: 45%; left: 16%;" onclick="showHotspot('🍓 Erdbeeren (500 g)', 'ca. 140 Liter Wasser – besonders viel Grundwasser bei künstlicher Bewässerung in Südeuropa.')">2</div>
+          <div class="hotspot-pin" style="top: 55%; left: 16%;" onclick="showHotspot('🍎 1 Apfel', 'ca. 125 Liter Wasser für Baumwachstum, Reife, Waschen und Verpacken.')">3</div>
+          <div class="hotspot-pin" style="top: 58%; left: 19%;" onclick="showHotspot('🍌 1 Banane', 'ca. 160 Liter Wasser für tropischen Anbau und weltweiten Transport.')">4</div>
+          <div class="hotspot-pin" style="top: 65%; left: 9%;" onclick="showHotspot('🍅 Tomaten (1 kg)', 'ca. 214 Liter Wasser – oft intensiv künstlich im Gewächshaus oder in Trockengebieten bewässert.')">5</div>
+          <div class="hotspot-pin" style="top: 72%; left: 21%;" onclick="showHotspot('🥕 Karotten (1 kg)', 'ca. 257 Liter Wasser – schneiden als heimisches Wurzelgemüse sehr wassersparend ab.')">6</div>
+          <div class="hotspot-pin" style="top: 63%; left: 33%;" onclick="showHotspot('🥒 Salatgurke', 'ca. 35 Liter Wasser – besteht selbst zu 96% aus Wasser und wächst meist regional.')">7</div>
+          <div class="hotspot-pin" style="top: 27%; left: 38%;" onclick="showHotspot('🥬 Kopfsalat', 'ca. 240 Liter pro Kilogramm – benötigt regelmäßige Bewässerung.')">8</div>
+          <div class="hotspot-pin" style="top: 36%; left: 22%;" onclick="showHotspot('🍊 Orangensaft (1 Liter)', 'ca. 850 Liter Wasser – für den Anbau sonnenhungriger Orangen in Spanien oder Brasilien.')">9</div>
+          <div class="hotspot-pin" style="top: 49%; left: 23%;" onclick="showHotspot('🥜 Walnüsse (100 g)', 'ca. 900 Liter Wasser – Nussbäume haben einen enorm hohen Wasserbedarf!')">10</div>
+          <div class="hotspot-pin" style="top: 44%; left: 27%;" onclick="showHotspot('🥣 Joghurt (250 g)', 'ca. 300 Liter Wasser – überwiegend für das Futter der Milchkuh.')">11</div>
+          <div class="hotspot-pin" style="top: 33%; left: 30%;" onclick="showHotspot('🧀 Quark / Frischkäse (250 g)', 'ca. 600 Liter Wasser – für die Eindickung großer Mengen Kuhmilch.')">12</div>
+          <div class="hotspot-pin" style="top: 40%; left: 36%;" onclick="showHotspot('🧀 Schnittkäse (1 kg)', 'ca. 5.000 Liter Wasser – da man rund 10 Liter Milch für 1 kg Käse benötigt!')">13</div>
+          <div class="hotspot-pin" style="top: 46%; left: 44%;" onclick="showHotspot('🧈 Butter (250 g)', 'ca. 1.400 Liter Wasser – für die Rahmgewinnung aus vielen Litern Milch.')">14</div>
+          <div class="hotspot-pin" style="top: 35%; left: 45%;" onclick="showHotspot('🍝 Nudeln / Pasta (500 g)', 'ca. 925 Liter Wasser – vor allem für Hartweizenanbau und Mahlvorgänge.')">15</div>
+          <div class="hotspot-pin" style="top: 29%; left: 52%;" onclick="showHotspot('🥖 Brotkorb (1 Laib Brot)', 'ca. 1.600 Liter Wasser – für Getreideanbau, Mühle und Backprozess.')">16</div>
+          <div class="hotspot-pin" style="top: 40%; left: 52%;" onclick="showHotspot('🥔 Kartoffeln (1 kg)', 'ca. 290 Liter Wasser – eine der wassersparendsten Beilagen überhaupt!')">17</div>
+          <div class="hotspot-pin" style="top: 58%; left: 43%;" onclick="showHotspot('🍫 1 Tafel Schokolade (100 g)', 'ca. 1.700 Liter Wasser – für den durstigen Kakaoanbau in Westafrika.')">18</div>
+          <div class="hotspot-pin" style="top: 52%; left: 34%;" onclick="showHotspot('🍗 Geflügelfleisch (1 kg)', 'ca. 4.300 Liter Wasser – für Hühnerfutter (Getreide & Soja) und Haltung.')">19</div>
+          <div class="hotspot-pin" style="top: 53%; left: 51%;" onclick="showHotspot('🌰 Mandeln (100 g)', 'ca. 1.600 Liter Wasser – Mandelhaine in Kalifornien verbrauchen gigantische Grundwassermengen.')">20</div>
+          <div class="hotspot-pin" style="top: 35%; left: 62%;" onclick="showHotspot('🥛 1 Liter Kuhmilch', 'ca. 1.000 Liter Wasser – für Futter, Tränke und Stallreinigung.')">21</div>
+          <div class="hotspot-pin" style="top: 48%; left: 61%;" onclick="showHotspot('🥩 1 kg Rindfleisch', 'ca. 15.400 Liter Wasser – der absolute Spitzenreiter unter den Lebensmitteln!')">22</div>
+          <div class="hotspot-pin" style="top: 41%; left: 71%;" onclick="showHotspot('🥚 1 Hühnerei', 'ca. 200 Liter Wasser – rund 1,5 Badewannen voll für Futteranbau und Haltung.')">23</div>
+          <div class="hotspot-pin" style="top: 65%; left: 57%;" onclick="showHotspot('📖 Aufgeschlagenes Schulheft', 'ca. 10 Liter Frischwasser pro Blatt beim Kochen & Bleichen von Holzfasern.')">24</div>
+          <div class="hotspot-pin" style="top: 55%; left: 73%;" onclick="showHotspot('📚 Bücherstapel', 'ca. 800 bis 1.200 Liter Wasser für Druck, Leimung und Papierherstellung.')">25</div>
+          <div class="hotspot-pin" style="top: 75%; left: 43%;" onclick="showHotspot('✏️ Buntstifte & Hefte', 'ca. 150 Liter Wasser für Holzverarbeitung, Farbpigmente und Bindemittel.')">26</div>
+          <div class="hotspot-pin" style="top: 74%; left: 64%;" onclick="showHotspot('📏 Lineal & Radiergummi', 'ca. 80 Liter Wasser – für Kautschukgewinnung, Holzfräsung und Veredelung.')">27</div>
+          <div class="hotspot-pin" style="top: 82%; left: 75%;" onclick="showHotspot('🎒 Schulrucksack', 'ca. 3.500 Liter Wasser für Kunstfasern (Polyester/Nylon), Färben und Beschichtung.')">28</div>
+          <div class="hotspot-pin" style="top: 37%; left: 89%;" onclick="showHotspot('👕 Weißes T-Shirt', 'ca. 2.500 Liter Wasser für Baumwollanbau, Entkörnung und Spinnereien.')">29</div>
+          <div class="hotspot-pin" style="top: 62%; left: 88%;" onclick="showHotspot('👖 Jeanshose', 'ca. 8.000 Liter Wasser – riesige Bewässerungsmengen und giftiges Grauwasser beim Färben.')">30</div>
+        </div>
+
+        <div id="hotspotInfo" class="hotspot-info"></div>
+
+        <div class="step-nav">
+          <button class="btn-step btn-step-secondary" onclick="showTab('text-seite')">⬅ Zurück zum Text</button>
+          <button class="btn-step" onclick="showTab('station2-seite')">Weiter zu Station 2 ➔</button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: STATION 2 – WASSERGIGANTEN & SCHÄTZ-ECKE 2              -->
+    <!-- ============================================================== -->
+    <div id="station2-seite" class="tab-content">
+      
+      <section class="guess-box">
+        <h3>🤔 Schätz-Ecke 2: Vorbereitung auf den Wassergiganten-Check</h3>
+        <p>Hier sind 4 neue Produkte. Welches verbraucht wohl am meisten Wasser und welches am wenigsten? Schätze die Liter:</p>
+        
+        <div class="guess-item">
+          <label>1. In <strong>1 Banane</strong> (Bewässerung & Transport): </label><br>
+          <input type="number" id="guessBanana" placeholder="z. B. 100"> Liter
+        </div>
+
+        <div class="guess-item">
+          <label>2. In <strong>1 Pizza Margherita</strong> (Mehl, Tomaten, Käse): </label><br>
+          <input type="number" id="guessPizza" placeholder="z. B. 500"> Liter
+        </div>
+
+        <div class="guess-item">
+          <label>3. In <strong>1 Hamburger</strong> (Rindfleisch, Brötchen, Salat): </label><br>
+          <input type="number" id="guessBurger" placeholder="z. B. 1000"> Liter
+        </div>
+
+        <div class="guess-item">
+          <label>4. In <strong>1 Paar Lederschuhen</strong> (Rinderhaltung & Gerbung): </label><br>
+          <input type="number" id="guessShoes" placeholder="z. B. 4000"> Liter
+        </div>
+
+        <button class="btn-action" onclick="document.getElementById('solutionBox2').style.display='block'">Rangfolge & Liter anzeigen</button>
+
+        <div id="solutionBox2" class="solution">
+          <strong>🔍 Die echte Rangfolge vom kleinsten zum größten Wassergiganten:</strong>
+          <ol>
+            <li><strong>Platz 4: 1 Banane:</strong> ca. 160 Liter</li>
+            <li><strong>Platz 3: 1 Pizza Margherita:</strong> ca. 1.250 Liter (vor allem wegen des Käses!)</li>
+            <li><strong>Platz 2: 1 Hamburger:</strong> ca. 2.400 Liter (durch das Rindfleisch-Patty)</li>
+            <li><strong>Platz 1: 1 Paar Lederschuhe:</strong> ca. 15.000 Liter (Leder benötigt riesige Mengen Wasser für Gerbung und Tierhaltung!)</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Station 2: Wassergiganten-Check</h2>
+        <p>Ordne die Produkte nach ihrem virtuellen Wasserverbrauch ein (Ziehe die Kärtchen mit der Maus in die Felder):</p>
+
+        <div class="h5p-drag-board">
+          <div class="ranking-header">
+            Wasserschule Oberfranken: Das große Wasser-Ranking
+          </div>
+
+          <div id="dragPool" class="drag-pool" ondragover="allowDrop(event)" ondrop="dropToPool(event)">
+            <div class="drag-card" draggable="true" id="item_steak" data-correct="slot_5" ondragstart="drag(event)">
+              <img src="steak.png" alt="Steak">
+            </div>
+            <div class="drag-card" draggable="true" id="item_apple" data-correct="slot_1" ondragstart="drag(event)">
+              <img src="aepfel.png" alt="Apfel">
+            </div>
+            <div class="drag-card" draggable="true" id="item_jeans" data-correct="slot_4" ondragstart="drag(event)">
+              <img src="jeans.png" alt="Jeans">
+            </div>
+            <div class="drag-card" draggable="true" id="item_bread" data-correct="slot_2" ondragstart="drag(event)">
+              <img src="brot.png" alt="Brot">
+            </div>
+            <div class="drag-card" draggable="true" id="item_tshirt" data-correct="slot_3" ondragstart="drag(event)">
+              <img src="tshirt.png" alt="T-Shirt">
+            </div>
+          </div>
+
+          <div class="scale-bar"></div>
+          <div class="scale-labels">
+            <span>Geringster Wasserverbrauch</span>
+            <span>Höchster Wasserverbrauch</span>
+          </div>
+
+          <div class="slots-container">
+            <div class="slot-column slot-blue">
+              <div class="slot-pill pill-blue">Platz 1</div>
+              <div class="drop-zone" id="slot_1" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
+              <div class="slot-footer-text text-blue">Wenigstes Wasser</div>
+              <span class="slot-badge" id="badge_1"></span>
+            </div>
+
+            <div class="slot-column slot-blue">
+              <div class="slot-pill pill-blue">Platz 2</div>
+              <div class="drop-zone" id="slot_2" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
+              <div class="slot-footer-text text-blue">Gering</div>
+              <span class="slot-badge" id="badge_2"></span>
+            </div>
+
+            <div class="slot-column slot-blue">
+              <div class="slot-pill pill-blue">Platz 3</div>
+              <div class="drop-zone" id="slot_3" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
+              <div class="slot-footer-text text-blue">Mittel</div>
+              <span class="slot-badge" id="badge_3"></span>
+            </div>
+
+            <div class="slot-column slot-blue">
+              <div class="slot-pill pill-blue">Platz 4</div>
+              <div class="drop-zone" id="slot_4" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
+              <div class="slot-footer-text text-blue">Viel</div>
+              <span class="slot-badge" id="badge_4"></span>
+            </div>
+
+            <div class="slot-column slot-red">
+              <div class="slot-pill pill-red">Platz 5</div>
+              <div class="drop-zone" id="slot_5" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
+              <div class="slot-footer-text text-red">Meistes Wasser</div>
+              <span class="slot-badge" id="badge_5"></span>
+            </div>
+          </div>
+
+          <div class="ranking-action-bar">
+            <button class="btn-check-ranking" onclick="checkRankingH5P()">Überprüfen</button>
+            <button class="btn-retry" onclick="resetRankingH5P()">🔄 Wiederholen</button>
+            <span id="scoreDisplay" class="score-display"></span>
           </div>
         </div>
-      </details>
 
-      <div class="h5p-memory-wrapper">
-        <div class="memory-grid" id="memoryGrid"></div>
-
-        <div class="memory-footer">
-          <div class="memory-stats">
-            <span>Versuche: <strong id="movesCount">0</strong></span>
-            <span>Paare: <strong id="pairsCount">0 / 6</strong></span>
-          </div>
-          <button class="btn-memory-retry" onclick="initMemory()">🔄 Neustart</button>
+        <div class="step-nav">
+          <button class="btn-step btn-step-secondary" onclick="showTab('station1-seite')">⬅ Zurück zu Station 1</button>
+          <button class="btn-step" onclick="showTab('station3-seite')">Weiter zu Station 3 ➔</button>
         </div>
-        <div id="memoryWinBanner" class="memory-win-banner"></div>
-      </div>
-    </section>
+      </section>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: STATION 3 – FARB-CHECK, JOKER & PROFI-MEMORY            -->
+    <!-- ============================================================== -->
+    <div id="station3-seite" class="tab-content">
+      
+      <section class="card">
+        <h2>Station 3: Farb-Check & Memory-Finale</h2>
+        
+        <!-- LEVEL 1: JUNIOR-TRAINER -->
+        <div class="junior-trainer" style="background:#fdf8e2; border:2px solid #f39c12; border-radius:10px; padding:20px; margin-bottom:25px;">
+          <h3 style="color: #d35400; margin-top: 0;">🟢🔵⚪ Level 1: Junior-Trainer (Farb-Zuordnung)</h3>
+          <p>Welche Wasser-Farbe passt? Klicke auf die richtige Farbe und teste dein Wissen sofort:</p>
+          
+          <div class="trainer-card">
+            <span>1. 🌧️ Ein <strong>Regenschauer</strong> lässt das Weizenfeld in Franken wachsen:</span>
+            <div class="trainer-btns">
+              <button class="btn-g" onclick="checkTrainer(1, 'green')">Grün</button>
+              <button class="btn-b" onclick="checkTrainer(1, 'blue')">Blau</button>
+              <button class="btn-gr" onclick="checkTrainer(1, 'gray')">Grau</button>
+              <span id="fb1" class="trainer-feedback"></span>
+            </div>
+          </div>
+
+          <div class="trainer-card">
+            <span>2. 🚰 Riesige <strong>Sprinkler-Anlagen</strong> pumpen Flusswasser auf ein Erdbeerfeld in Spanien:</span>
+            <div class="trainer-btns">
+              <button class="btn-g" onclick="checkTrainer(2, 'green')">Grün</button>
+              <button class="btn-b" onclick="checkTrainer(2, 'blue')">Blau</button>
+              <button class="btn-gr" onclick="checkTrainer(2, 'gray')">Grau</button>
+              <span id="fb2" class="trainer-feedback"></span>
+            </div>
+          </div>
+
+          <div class="trainer-card">
+            <span>3. 👖 In einer Fabrik fließt <strong>giftige Textilfarbe</strong> ins Abwasser:</span>
+            <div class="trainer-btns">
+              <button class="btn-g" onclick="checkTrainer(3, 'green')">Grün</button>
+              <button class="btn-b" onclick="checkTrainer(3, 'blue')">Blau</button>
+              <button class="btn-gr" onclick="checkTrainer(3, 'gray')">Grau</button>
+              <span id="fb3" class="trainer-feedback"></span>
+            </div>
+          </div>
+
+          <div class="trainer-card">
+            <span>4. 🚜 Ein Bauer spritzt <strong>Kunstdünger</strong>, der ins Grundwasser sickert:</span>
+            <div class="trainer-btns">
+              <button class="btn-g" onclick="checkTrainer(4, 'green')">Grün</button>
+              <button class="btn-b" onclick="checkTrainer(4, 'blue')">Blau</button>
+              <button class="btn-gr" onclick="checkTrainer(4, 'gray')">Grau</button>
+              <span id="fb4" class="trainer-feedback"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- LEVEL 2: PROFI-MEMORY MIT DETEKTIV-JOKER -->
+        <h3 style="color: #0077b6;">🧠 Level 2: Profi-Memory-Spiel</h3>
+        <p>Finde alle 6 zusammengehörenden Paare:</p>
+
+        <!-- AUFKLAPPBARER DETEKTIV-JOKER -->
+        <details class="memory-hint-box">
+          <summary>💡 Detektiv-Joker & Denkstützen öffnen (Hier klicken)</summary>
+          <div class="memory-hint-content">
+            <strong style="color: #6a1b9a;">Die Farb-Merkbrücken:</strong>
+            <ul style="margin-bottom: 12px;">
+              <li>🌱 <strong>Grünes Wasser:</strong> Natürlicher Regen auf Felder und Wiesen.</li>
+              <li>🚰 <strong>Blaues Wasser:</strong> Künstlich gepumptes Wasser (Brunnen, Leitungen, Schläuche).</li>
+              <li>🧪 <strong>Graues Wasser:</strong> Schmutzwasser durch Farben, Dünger oder Industrie.</li>
+            </ul>
+            <div style="background: #fdf2e9; border-left: 4px solid #e67e22; padding: 10px; border-radius: 4px; font-size: 0.95rem;">
+              ⚠️ <strong>Achtung Stolperfalle:</strong> Künstlich bewässerte Pflanzen zählen als <strong>blaues Wasser</strong>, nicht als grünes Wasser!
+            </div>
+          </div>
+        </details>
+
+        <div class="h5p-memory-wrapper">
+          <div class="memory-grid" id="memoryGrid"></div>
+
+          <div class="memory-footer">
+            <div class="memory-stats">
+              <span>Versuche: <strong id="movesCount">0</strong></span>
+              <span>Paare: <strong id="pairsCount">0 / 6</strong></span>
+            </div>
+            <button class="btn-memory-retry" onclick="initMemory()">🔄 Neustart</button>
+          </div>
+          <div id="memoryWinBanner" class="memory-win-banner"></div>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn-step btn-step-secondary" onclick="showTab('station2-seite')">⬅ Zurück zu Station 2</button>
+          <button class="btn-step" onclick="showTab('text-seite')">Zurück zum Start (Infotext) ➔</button>
+        </div>
+      </section>
+
+    </div>
 
   </div>
 
-  <!-- JAVASCRIPT-LOGIK FÜR ALLE SPIELE -->
+  <!-- JAVASCRIPT-LOGIK FÜR NAVIGATION & ALLE SPIELE -->
   <script>
+    // Tab-Navigation zwischen den Seiten/Stationen
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      document.getElementById(tabId).classList.add('active');
+
+      const btnMap = {
+        'text-seite': 0,
+        'station1-seite': 1,
+        'station2-seite': 2,
+        'station3-seite': 3
+      };
+      const activeIdx = btnMap[tabId];
+      if (activeIdx !== undefined) {
+        document.querySelectorAll('.tab-btn')[activeIdx].classList.add('active');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     // Station 1: Hotspot Popup
     function showHotspot(title, text) {
       var box = document.getElementById('hotspotInfo');
@@ -921,7 +1043,6 @@
     function resetRankingH5P() {
       const pool = document.getElementById('dragPool');
       const cards = Array.from(document.querySelectorAll('.drag-card'));
-      // Alle Kärtchen zurück in den Startpool legen und zufällig durchmischen
       cards.sort(() => Math.random() - 0.5).forEach(card => pool.appendChild(card));
       for (let i = 1; i <= 5; i++) {
         document.getElementById('badge_' + i).innerHTML = "";
@@ -1042,7 +1163,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       initMemory();
-      resetRankingH5P(); // Mischt die 5 Wassergiganten-Kärtchen direkt beim Laden zufällig durch!
+      resetRankingH5P();
     });
   </script>
 
