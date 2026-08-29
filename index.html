@@ -494,12 +494,12 @@
       
       <p>Die Antwort lautet: Fast alles, was wir essen, anziehen oder benutzen, hat einen unsichtbaren „Wasser-Rucksack“ auf. Um einen Apfel wachsen zu lassen, ein T-Shirt zu nähen oder ein Smartphone zu bauen, werden riesige Mengen Wasser gebraucht, verdunstet oder verschmutzt. Dieses versteckte Wasser nennen Forscher virtuelles Wasser.</p>
 
-      
+
       </div>
 
       <h3>Ein Apfel geht auf Reisen</h3>
       <p>Schau dir einen einfachen Apfel an: Am Baum braucht er monatelang Regen und Grundwasser, damit er saftig wird. Nach der Ernte wird er gewaschen, sortiert und verpackt. Bis er in deiner Brotdose landet, hat ein einziger Apfel etwa 125 Liter Wasser geschluckt" - das ist mehr als ein ganzes Schulfass voll!</p>
-        <img src="apfel.jpg" alt="Apfel am Zweig" class="content-img">
+              <img src="apfel.jpg" alt="Apfel am Zweig" class="content-img">
       <p>Noch viel extremer ist es bei tierischen Lebensmitteln. Eine Kuh frisst im Laufe ihres Lebens riesige Mengen an Getreide und Soja. Diese Futterpflanzen müssen monatelang auf Feldern bewässert werden. Rechnet man das gesamte Futter, das Trinkwasser der Kuh und die Schlachtung zusammen, stecken in nur einem einzigen Kilogramm Rindfleisch über 15.000 Liter Wasser!</p>
 
       <h3>Die drei Farben des unsichtbaren Wassers</h3>
@@ -528,13 +528,13 @@
 
     <!-- SEITE 3 & 4: DER WEITE WEG VOM FUTTERTROG INS GLAS -->
     <section class="card">
- 
+  
 
       <h2>DER WEITE WEG VOM FUTTERTROG INS GLAS: WARUM SCHNITZEL UND MILCH SO DURSTIG SIND</h2>
       
       <h3>Was hat mein Burger mit dem Regenwald zu tun?</h3>
       <p>Wenn wir an eine Kuh auf einer oberfränkischen Weide denken, sehen wir saftig grünes Gras und frische Luft. Doch die meisten Nutztiere auf der Welt fressen nicht nur Gras, sondern Kraftfutter - vor allem Soja und Getreide.</p>
-          <img src="kuh-feld.png" alt="Kuh vor Sojafeld" class="content-img">
+        <img src="kuh-feld.png" alt="Kuh vor Sojafeld" class="content-img">
       <p>Soja ist eine Hülsenfrucht, die besonders viel Eiweiß enthält und Tiere schnell wachsen lässt. Riesige Sojafelder befinden sich in Südamerika, etwa in Brasilien. Um dort Platz für Felder zu schaffen, werden wertvolle Regenwälder gerodet. Bis das Soja geerntet, zu Futterpellets verarbeitet und mit Frachtschiffen über die Ozeane zu uns transportiert wird, sind gewaltige Mengen Regen- und Bewässerungswasser verbraucht worden.</p>
       
       <img src="maehdrescher.jpg" alt="Mähdrescher auf Sojafeld mit Frachtschiff" class="content-img">
@@ -718,20 +718,20 @@
         </div>
 
         <div id="dragPool" class="drag-pool" ondragover="allowDrop(event)" ondrop="dropToPool(event)">
+          <div class="drag-card" draggable="true" id="item_steak" data-correct="slot_5" ondragstart="drag(event)">
+            <img src="steak.png" alt="Steak">
+          </div>
           <div class="drag-card" draggable="true" id="item_apple" data-correct="slot_1" ondragstart="drag(event)">
             <img src="aepfel.png" alt="Apfel">
+          </div>
+          <div class="drag-card" draggable="true" id="item_jeans" data-correct="slot_4" ondragstart="drag(event)">
+            <img src="jeans.png" alt="Jeans">
           </div>
           <div class="drag-card" draggable="true" id="item_bread" data-correct="slot_2" ondragstart="drag(event)">
             <img src="brot.png" alt="Brot">
           </div>
           <div class="drag-card" draggable="true" id="item_tshirt" data-correct="slot_3" ondragstart="drag(event)">
             <img src="tshirt.png" alt="T-Shirt">
-          </div>
-          <div class="drag-card" draggable="true" id="item_jeans" data-correct="slot_4" ondragstart="drag(event)">
-            <img src="jeans.png" alt="Jeans">
-          </div>
-          <div class="drag-card" draggable="true" id="item_steak" data-correct="slot_5" ondragstart="drag(event)">
-            <img src="steak.png" alt="Steak">
           </div>
         </div>
 
@@ -921,8 +921,9 @@
     }
     function resetRankingH5P() {
       const pool = document.getElementById('dragPool');
-      const cards = document.querySelectorAll('.drag-card');
-      cards.forEach(card => pool.appendChild(card));
+      const cards = Array.from(document.querySelectorAll('.drag-card'));
+      // Alle Kärtchen zurück in den Startpool legen und zufällig durchmischen
+      cards.sort(() => Math.random() - 0.5).forEach(card => pool.appendChild(card));
       for (let i = 1; i <= 5; i++) {
         document.getElementById('badge_' + i).innerHTML = "";
       }
@@ -1040,7 +1041,10 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', initMemory);
+    document.addEventListener('DOMContentLoaded', function() {
+      initMemory();
+      resetRankingH5P(); // Mischt die 5 Wassergiganten-Kärtchen direkt beim Laden zufällig durch!
+    });
   </script>
 
 </body>
