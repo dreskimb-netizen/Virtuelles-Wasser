@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wasserschule Oberfranken – Virtuelles Wasser</title>
   <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.6;
@@ -14,7 +17,7 @@
       padding: 20px;
     }
     .container {
-      max-width: 1050px;
+      max-width: 1000px;
       margin: 0 auto;
     }
     header {
@@ -25,27 +28,11 @@
       border-radius: 12px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
-    h1 {
-      color: #0077b6;
-      margin: 0 0 8px 0;
-    }
-    .subtitle {
-      font-size: 1.25rem;
-      color: #023e8a;
-      font-weight: bold;
-      margin: 0;
-    }
-    h2 {
-      color: #023e8a;
-      margin-top: 0;
-      border-bottom: 2px solid #e0f2fe;
-      padding-bottom: 8px;
-    }
-    h3 {
-      color: #0077b6;
-      margin-top: 25px;
-      margin-bottom: 10px;
-    }
+    h1 { color: #0077b6; margin: 0 0 8px 0; font-size: 2rem; }
+    .subtitle { font-size: 1.2rem; color: #023e8a; font-weight: bold; margin: 0; }
+    h2 { color: #023e8a; margin-top: 0; border-bottom: 2px solid #e0f2fe; padding-bottom: 8px; font-size: 1.5rem; }
+    h3 { color: #0077b6; margin-top: 25px; margin-bottom: 10px; font-size: 1.25rem; }
+    
     .card {
       background: #ffffff;
       border-radius: 12px;
@@ -53,8 +40,7 @@
       margin-bottom: 35px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
-
-    /* Bild-Stile */
+    
     .content-img {
       width: 100%;
       max-width: 800px;
@@ -63,9 +49,8 @@
       margin: 20px auto;
       border-radius: 8px;
     }
-    .content-img-small {
-      max-width: 450px;
-    }
+    .content-img-small { max-width: 420px; }
+    
     .image-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -73,26 +58,17 @@
       margin: 20px 0;
       align-items: center;
     }
-
-    /* Infokasten Wassergiganten */
+    
     .highlight-box {
       background: #eef9ff;
       border: 2px solid #bde0fe;
       border-radius: 8px;
-      padding: 15px 25px;
+      padding: 18px 25px;
       margin: 25px 0;
     }
-    .highlight-box ul {
-      margin: 8px 0 0 0;
-      padding-left: 20px;
-      list-style-type: none;
-    }
-    .highlight-box li {
-      font-size: 1.05rem;
-      margin-bottom: 5px;
-    }
+    .highlight-box ul { margin: 8px 0 0 0; padding-left: 20px; list-style-type: none; }
+    .highlight-box li { font-size: 1.05rem; margin-bottom: 6px; }
 
-    /* Experiment Box */
     .experiment-box {
       background: #fdf2e9;
       border-left: 6px solid #e67e22;
@@ -100,12 +76,9 @@
       border-radius: 8px;
       margin-top: 30px;
     }
-    .experiment-box h3 {
-      color: #d35400;
-      margin-top: 0;
-    }
+    .experiment-box h3 { color: #d35400; margin-top: 0; }
 
-    /* Schätz-Boxen */
+    /* SCHÄTZ-ECKEN */
     .guess-box {
       background: #fff8e1;
       border: 2px dashed #ffb300;
@@ -113,21 +86,17 @@
       padding: 25px;
       margin-bottom: 35px;
     }
-    .guess-box h3 {
-      color: #d35400;
-      margin-top: 0;
-    }
-    .guess-item {
-      margin-bottom: 15px;
-    }
+    .guess-box h3 { color: #d35400; margin-top: 0; font-size: 1.3rem; }
+    .guess-item { margin-bottom: 15px; }
     .guess-item input {
-      padding: 8px;
+      padding: 8px 12px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      width: 140px;
+      width: 150px;
       font-size: 15px;
+      margin-top: 5px;
     }
-    .btn-check {
+    .btn-action {
       background: #0077b6;
       color: white;
       border: none;
@@ -136,27 +105,236 @@
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
+      transition: background 0.2s;
     }
-    .btn-check:hover {
-      background: #023e8a;
-    }
+    .btn-action:hover { background: #023e8a; }
+    
     .solution {
       display: none;
       margin-top: 15px;
-      padding: 15px;
+      padding: 15px 20px;
       background: #e8f5e9;
       border-radius: 6px;
-      border-left: 4px solid #2e7d32;
+      border-left: 5px solid #2e7d32;
     }
 
-    /* STUFE 1: TRAINER-SPIEL FÜR JÜNGERE SCHÜLER */
-    .junior-trainer {
-      background: #fdf8e2;
-      border: 2px solid #f39c12;
+    /* HILFE-BOXEN (JOKER / DETEKTIV-TIPPS) */
+    .memory-hint-box {
+      background: #f3e5f5;
+      border: 2px dashed #ab47bc;
       border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+    }
+    .memory-hint-box summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: #6a1b9a;
+      font-size: 1.05rem;
+    }
+    .memory-hint-content {
+      margin-top: 15px;
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #e1bee7;
+    }
+
+    /* STATION 1: WIMMELBILD HOTSPOTS */
+    .hotspot-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .hotspot-container img { width: 100%; display: block; }
+    .hotspot-pin {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      background: #e63946;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      cursor: pointer;
+      border: 2px solid white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      animation: pulse 2s infinite;
+      transform: translate(-50%, -50%);
+    }
+    @keyframes pulse {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.15); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+    .hotspot-info {
+      margin-top: 15px;
+      padding: 15px;
+      background: #e1f5fe;
+      border-left: 5px solid #0288d1;
+      border-radius: 6px;
+      display: none;
+      font-size: 1.05rem;
+    }
+
+    /* STATION 2: DRAG & DROP BOARD */
+    .h5p-drag-board {
+      border: 2px solid #e1f0fa;
+      border-radius: 12px;
       padding: 20px;
+      background: #fafcff;
+      max-width: 950px;
+      margin: 0 auto;
+    }
+    .ranking-header {
+      border: 2px solid #0088cc;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      font-weight: 800;
+      color: #0077b6;
+      font-size: 1.25rem;
+      background: #ffffff;
+      margin-bottom: 20px;
+    }
+    .drag-pool {
+      min-height: 120px;
+      border: 2px solid #cce5f6;
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .drag-card {
+      width: 105px;
+      height: 105px;
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+      touch-action: none;
+    }
+    .drag-card img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+    .scale-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: linear-gradient(to right, #4caf50 0%, #ffeb3b 50%, #f44336 100%);
+      margin-bottom: 5px;
+    }
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .scale-labels span:first-child { color: #2e7d32; }
+    .scale-labels span:last-child { color: #c62828; }
+    .slots-container {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
       margin-bottom: 25px;
     }
+    .slot-column {
+      border-radius: 12px;
+      padding: 10px 6px;
+      text-align: center;
+      position: relative;
+      background: #ffffff;
+    }
+    .slot-blue { border: 2px solid #0099e6; }
+    .slot-red { border: 2px solid #e53935; }
+    .slot-pill {
+      color: white;
+      font-weight: bold;
+      font-size: 0.85rem;
+      padding: 4px 8px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .pill-blue { background: #0088cc; }
+    .pill-red { background: #c62828; }
+    .drop-zone {
+      height: 110px;
+      border: 2px dashed #bcdcfa;
+      border-radius: 8px;
+      background: #f4faff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+    .drop-zone .drag-card {
+      border-color: transparent;
+      box-shadow: none;
+    }
+    .slot-footer-text {
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+    .text-blue { color: #0077b6; }
+    .text-red { color: #c62828; }
+    .slot-badge {
+      position: absolute;
+      bottom: 5px;
+      right: 6px;
+      font-size: 1.2rem;
+    }
+    .ranking-action-bar {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-top: 1px solid #e0f2fe;
+      padding-top: 15px;
+    }
+    .btn-check-ranking {
+      background: #0077b6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-retry {
+      background: #ffffff;
+      color: #0077b6;
+      border: 2px solid #0077b6;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .score-display {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #023e8a;
+    }
+
+    /* STATION 3: MEMORY & JUNIOR-TRAINER */
     .trainer-card {
       background: #ffffff;
       border-radius: 8px;
@@ -180,46 +358,117 @@
     .btn-g { background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
     .btn-b { background: #e1f5fe; color: #0288d1; border-color: #90caf9; }
     .btn-gr { background: #f5f5f5; color: #616161; border-color: #bdbdbd; }
-    .trainer-feedback {
-      font-weight: bold;
-      margin-left: 10px;
-    }
+    .trainer-feedback { font-weight: bold; margin-left: 10px; }
 
-    /* Hilfebox / Joker */
-    .memory-hint-box {
-      background: #f3e5f5;
-      border: 2px dashed #ab47bc;
-      border-radius: 10px;
-      padding: 15px 20px;
-      margin-bottom: 20px;
+    .h5p-memory-wrapper {
+      background: #f8fbfe;
+      border: 2px solid #d0e7f9;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
     }
-    .memory-hint-box summary {
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      perspective: 1000px;
+    }
+    .memory-card-container {
+      height: 120px;
       cursor: pointer;
-      font-weight: bold;
-      color: #6a1b9a;
-      font-size: 1.05rem;
+      position: relative;
     }
-    .memory-hint-content {
-      margin-top: 15px;
-      background: #ffffff;
-      padding: 15px;
+    .memory-card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
       border-radius: 8px;
-      border: 1px solid #e1bee7;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+    .memory-card-container.flipped .memory-card-inner,
+    .memory-card-container.matched .memory-card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+      box-sizing: border-box;
+      font-weight: bold;
+    }
+    .card-front {
+      background: #0077b6;
+      color: #ffffff;
+      font-size: 2rem;
+    }
+    .card-back {
+      background: #ffffff;
+      color: #1e3a8a;
+      transform: rotateY(180deg);
+      border: 2px solid #0077b6;
+      font-size: 0.95rem;
+      line-height: 1.3;
+    }
+    .memory-card-container.matched .card-back {
+      background: #e8f5e9;
+      border-color: #2e7d32;
+      color: #1b5e20;
+    }
+    .memory-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #d0e7f9;
+    }
+    .memory-stats {
+      font-size: 1.05rem;
+      color: #023e8a;
+      display: flex;
+      gap: 20px;
+    }
+    .btn-memory-retry {
+      background: #ffffff;
+      color: #0077b6;
+      border: 2px solid #0077b6;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-memory-retry:hover { background: #0077b6; color: #ffffff; }
+    .memory-win-banner {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background: #e8f5e9;
+      border: 2px solid #2e7d32;
+      border-radius: 8px;
+      text-align: center;
+      color: #1b5e20;
+      font-size: 1.15rem;
+      font-weight: bold;
     }
 
-    /* IFrames */
-    .iframe-wrapper {
-      position: relative;
-      width: 100%;
-      margin-top: 15px;
-    }
-    iframe {
-      width: 100%;
-      border: none;
-      border-radius: 8px;
+    @media (max-width: 650px) {
+      .slots-container { grid-template-columns: repeat(2, 1fr); }
+      .memory-grid { grid-template-columns: repeat(3, 1fr); }
+      .memory-card-container { height: 105px; }
+      .card-back { font-size: 0.85rem; }
     }
   </style>
-  <script src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/js/h5p-resizer.js" charset="UTF-8"></script>
 </head>
 <body>
 
@@ -236,7 +485,7 @@
 
     <!-- SEITE 1 & 2: WO VERSTECKT SICH DAS WASSER? -->
     <section class="card">
-      <img src="titelbild-erde.PNG" alt="Virtuelles Wasser - Erde mit Wasserhahn" class="content-img">
+      <img src="titelbild-erde.jpg" alt="Virtuelles Wasser - Erde mit Wasserhahn" class="content-img">
 
       <h2>Wo versteckt sich das Wasser?</h2>
       <p>Wenn du morgens den Wasserhahn aufdrehst, um dir die Zähne zu putzen, ein Glas Wasser trinkst oder unter die Dusche hüpfst, siehst du das Wasser fließen. Das nennen wir direktes Wasser. In Deutschland verbraucht jeder Mensch davon etwa 125 Liter am Tag das ist ungefähr eine volle Badewanne.</p>
@@ -246,13 +495,12 @@
       <p>Die Antwort lautet: Fast alles, was wir essen, anziehen oder benutzen, hat einen unsichtbaren „Wasser-Rucksack“ auf. Um einen Apfel wachsen zu lassen, ein T-Shirt zu nähen oder ein Smartphone zu bauen, werden riesige Mengen Wasser gebraucht, verdunstet oder verschmutzt. Dieses versteckte Wasser nennen Forscher virtuelles Wasser.</p>
 
       <div class="image-grid">
-        
+        <img src="aralsee.jpg" alt="Schiffswrack im ausgetrockneten Aralsee" class="content-img">
+        <img src="apfel.jpg" alt="Apfel am Zweig" class="content-img">
       </div>
 
       <h3>Ein Apfel geht auf Reisen</h3>
       <p>Schau dir einen einfachen Apfel an: Am Baum braucht er monatelang Regen und Grundwasser, damit er saftig wird. Nach der Ernte wird er gewaschen, sortiert und verpackt. Bis er in deiner Brotdose landet, hat ein einziger Apfel etwa 125 Liter Wasser geschluckt" - das ist mehr als ein ganzes Schulfass voll!</p>
-    
-      <img src="apfel.jpg" alt="Apfel am Zweig" class="content-img">
       
       <p>Noch viel extremer ist es bei tierischen Lebensmitteln. Eine Kuh frisst im Laufe ihres Lebens riesige Mengen an Getreide und Soja. Diese Futterpflanzen müssen monatelang auf Feldern bewässert werden. Rechnet man das gesamte Futter, das Trinkwasser der Kuh und die Schlachtung zusammen, stecken in nur einem einzigen Kilogramm Rindfleisch über 15.000 Liter Wasser!</p>
 
@@ -267,7 +515,6 @@
       <h3>Was hat deine Jeanshose mit der Wüste zu tun?</h3>
       <p>Deine Lieblingsjeans wiegt nicht viel - aber bei ihrer Herstellung verbraucht sie unglaubliche 8.000 Liter Wasser! Die Baumwolle wächst oft in sehr trockenen Ländern. Riesige Bewässerungsanlagen saugen dort Flüsse und Seen leer. Ein berühmtes Beispiel ist der riesige Aralsee in Asien: Weil das Wasser für Baumwollfelder abgezweigt wurde, ist ein fast meergroßer See fast vollständig zu einer staubigen Wüste vertrocknet, in der rostige Schiffe im Sand liegen.</p>
 
-      <img src="aralsee.jpg" alt="Schiffswrack im ausgetrockneten Aralsee" class="content-img">
       <div class="highlight-box">
         <strong>Infokasten: Die Wassergiganten</strong>
         <ul>
@@ -282,13 +529,12 @@
 
     <!-- SEITE 3 & 4: DER WEITE WEG VOM FUTTERTROG INS GLAS -->
     <section class="card">
-   
+      <img src="kuh-feld.jpg" alt="Kuh vor Sojafeld" class="content-img">
 
       <h2>DER WEITE WEG VOM FUTTERTROG INS GLAS: WARUM SCHNITZEL UND MILCH SO DURSTIG SIND</h2>
       
       <h3>Was hat mein Burger mit dem Regenwald zu tun?</h3>
       <p>Wenn wir an eine Kuh auf einer oberfränkischen Weide denken, sehen wir saftig grünes Gras und frische Luft. Doch die meisten Nutztiere auf der Welt fressen nicht nur Gras, sondern Kraftfutter - vor allem Soja und Getreide.</p>
-        <img src="kuh-feld.png" alt="Kuh vor Sojafeld" class="content-img">
       <p>Soja ist eine Hülsenfrucht, die besonders viel Eiweiß enthält und Tiere schnell wachsen lässt. Riesige Sojafelder befinden sich in Südamerika, etwa in Brasilien. Um dort Platz für Felder zu schaffen, werden wertvolle Regenwälder gerodet. Bis das Soja geerntet, zu Futterpellets verarbeitet und mit Frachtschiffen über die Ozeane zu uns transportiert wird, sind gewaltige Mengen Regen- und Bewässerungswasser verbraucht worden.</p>
       
       <img src="maehdrescher.jpg" alt="Mähdrescher auf Sojafeld mit Frachtschiff" class="content-img">
@@ -303,17 +549,18 @@
       </ul>
       <p>Pflanzliche Lebensmittel wie Kartoffeln (ca. 290 Liter pro kg) oder heimisches Gemüse schneiden im Vergleich um ein Vielfaches wassersparender ab, da der Umweg über das Tierfutter entfällt.</p>
 
+      <img src="milch-kaese-hafer.jpg" alt="Kuhmilch, Käse und Haferdrink im Vergleich" class="content-img content-img-small">
 
       <h3>Wie viel Wasser steckt im Glas Milch?</h3>
       <p>Auch Milch und Milchprodukte sind echte Wasserspeicher:</p>
       <p>In 1 Liter Kuhmilch stecken im Schnitt rund 1.000 Liter virtuelles Wasser (für Futter, Stallreinigung und Verarbeitung).</p>
       <p>Für 1 Kilogramm Schnittkäse werden rund 5.000 Liter Wasser benötigt, da man für ein einziges Kilo Käse etwa 10 Liter Milch eindicken muss.</p>
       <p>Pflanzliche Alternativen wie Hafermilch aus heimischem Anbau schneiden deutlich besser ab: Ein Liter Haferdrink verbraucht nur etwa 30 bis 50 Liter Wasser.</p>
-       <img src="milch-kaese-hafer.jpg" alt="Kuhmilch, Käse und Haferdrink im Vergleich" class="content-img content-img-small">
     </section>
 
     <!-- SEITE 5: WASSERDETEKTIVE IM EINSATZ -->
     <section class="card">
+      <img src="papierschoepfen-anleitung.jpg" alt="Anleitung Papierschöpfen" class="content-img">
 
       <h2>Wasserdetektive im Einsatz</h2>
       <p class="subtitle">Wie du mit kleinen Schritten riesige Wellen schlägst</p>
@@ -321,6 +568,11 @@
       <h3>Warum dein Schulheft ein echter Wasserspeicher ist</h3>
       <p>Für ein einziges Blatt frisches, weißes Papier aus neuen Holzfasern werden in der Fabrik bis zu 10 Liter Wasser benötigt - das ist ein ganzer Putzeimer voll! Denn das Holz muss mit viel Wasser und Chemie gekocht, gebleicht und ausgewaschen werden.</p>
       <p>Bei Recyclingpapier (aus alten Zeitungen oder Kartons) sind die Papierfasern schon fertig. Man braucht sie nur im Wasser aufzuweichen und neu zu formen. Das spart über 70% Wasser und jede Menge Energie. Wenn deine ganze Klasse Hefte mit dem Umweltzeichen „Blauer Engel" nutzt, rettet ihr jedes Schuljahr tausende Liter sauberes Trinkwasser!</p>
+
+      <div class="image-grid">
+        <img src="heft-frischfaser.jpg" alt="Heft aus Frischfaser mit Wassertropfen" class="content-img content-img-small">
+        <img src="heft-recycling.jpg" alt="Heft aus Recyclingpapier" class="content-img content-img-small">
+      </div>
 
       <h3>Du hast die Wahl: Dein täglicher Wasser-Fußabdruck</h3>
       <p>Virtuelles Wasser lässt sich nicht einfach am Hahn abdrehen aber du kannst jeden Tag mit deinen Entscheidungen bestimmen, wie viel Wasser auf der Welt verbraucht wird. Niemand muss perfekt sein oder auf alles verzichten. Wenn viele Menschen kleine Dinge verändern, spart das Millionen Liter wertvolles Trink- und Grundwasser.</p>
@@ -337,12 +589,11 @@
           <li>Lass das Wasser abtropfen. Stürze das nasse Papierblatt auf ein Geschirrtuch, decke es ab und rolle mit dem Nudelholz das restliche Wasser heraus. Lass dein Papier an der Luft trocknen.</li>
         </ol>
         <p><strong>Erklärung:</strong> Die Papierfasern verhaken sich im Wasser von ganz alleine miteinander. Das abgetropfte Wasser in der Wanne ist nicht verloren man kann darin direkt das nächste Blatt schöpfen! Bei echtem Recyclingpapier geht kaum Wasser verloren, während bei neuem Papier aus Holzstämmen gigantische Mengen Frischwasser verbraucht und verschmutzt werden.</p>
-        <img src="papierschoepfen-anleitung.jpg" alt="Anleitung Papierschöpfen" class="content-img">
       </div>
     </section>
 
     <!-- ============================================================== -->
-    <!-- TEIL 2: SCHÄTZ-ECKEN & INTERAKTIVE STATIONEN                   -->
+    <!-- TEIL 2: SCHÄTZ-ECKEN & DIE 3 INTERAKTIVEN STATIONEN            -->
     <!-- ============================================================== -->
 
     <!-- SCHÄTZ-ECKE 1 VOR STATION 1 -->
@@ -365,28 +616,41 @@
         <input type="number" id="guessPhone" placeholder="z. B. 3000"> Liter
       </div>
 
-      <button class="btn-check" onclick="document.getElementById('solutionBox1').style.display='block'">Schätzungen prüfen & Auflösung anzeigen</button>
+      <button class="btn-action" onclick="document.getElementById('solutionBox1').style.display='block'">Schätzungen prüfen & Auflösung anzeigen</button>
 
       <div id="solutionBox1" class="solution">
         <strong>🔍 Auflösung:</strong>
         <ul>
           <li><strong>1 Tasse Kaffee:</strong> ca. 130 bis 140 Liter (entspricht fast einer ganzen Badewanne für nur eine Tasse!)</li>
           <li><strong>1 Hühnerei:</strong> ca. 200 Liter (rund 1,5 Badewannen voll Wasser für das Hühnerfutter)</li>
-          <li><strong>1 Smartphone:</strong> ca. 12.000 Liter (über 80 Badewannen für die Gewinnung seltener Erden und die Chipproduktion!)</li>
+          <li><strong>1 Smartphone:</strong> ca. 12.000 Liter (über 80 Badewannen für seltene Erden und Chipproduktion!)</li>
         </ul>
       </div>
     </section>
 
-    <!-- STATION 1: WIMMELBILD -->
+    <!-- STATION 1: WIMMELBILD MIT PASSENDEN HOTSPOTS -->
     <section class="card">
       <h2>Station 1: Wimmelbild – Wo versteckt sich virtuelles Wasser?</h2>
-      <p>Klicke auf die Hotspots im Bild, um herauszufinden, wo überall Wasser im Alltag versteckt ist.</p>
-      <div class="iframe-wrapper">
-        <iframe src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/content/1292975859694986207/embed" aria-label="Wimmelbild: Wo versteckt sich virtuelles Wasser?" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay *; geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe>
+      <p>Klicke auf die roten Punkte auf dem Tisch, um den versteckten Wasserverbrauch der Dinge aufzudecken:</p>
+      
+      <div class="hotspot-container">
+        <img src="wimmelbild.jpg" alt="Wimmelbild Virtuelles Wasser auf dem Küchentisch">
+        
+        <!-- Hotspots exakt auf den Objekten deines Tisches -->
+        <div class="hotspot-pin" style="top: 48%; left: 61%;" onclick="showHotspot('🥩 1 kg Rindfleisch: Unglaubliche 15.400 Liter Wasser stecken hier drin – vor allem für das Kraftfutter (Soja & Getreide) der Kuh!')">1</div>
+        <div class="hotspot-pin" style="top: 60%; left: 88%;" onclick="showHotspot('👖 Jeanshose: Rund 8.000 Liter Wasser werden für den Baumwollanbau in trockenen Ländern und das Färben des Stoffs verbraucht!')">2</div>
+        <div class="hotspot-pin" style="top: 36%; left: 62%;" onclick="showHotspot('🥛 1 Liter Milch: Schluckt etwa 1.000 Liter virtuelles Wasser. Für 1 kg Käse werden sogar 5.000 Liter benötigt!')">3</div>
+        <div class="hotspot-pin" style="top: 58%; left: 42%;" onclick="showHotspot('🍫 1 Tafel Schokolade: Für den Anbau und die Bewässerung der Kakaobohnen werden rund 1.700 Liter Wasser benötigt.')">4</div>
+        <div class="hotspot-pin" style="top: 41%; left: 71%;" onclick="showHotspot('🥚 1 Hühnerei: Etwa 200 Liter Wasser stecken in einem einzigen Ei, größtenteils für das Hühnerfutter.')">5</div>
+        <div class="hotspot-pin" style="top: 55%; left: 16%;" onclick="showHotspot('🍎 1 Apfel: Benötigt ca. 125 Liter Regen- und Grundwasser, bis er saftig geerntet und verpackt ist.')">6</div>
+        <div class="hotspot-pin" style="top: 66%; left: 56%;" onclick="showHotspot('📓 Schulheft: Ein einzelnes Blatt aus frischem Holz braucht bis zu 10 Liter Wasser beim Kochen und Bleichen. Recyclingpapier spart über 70 %!')">7</div>
+        <div class="hotspot-pin" style="top: 58%; left: 19%;" onclick="showHotspot('🍌 1 Banane: Rund 160 Liter Wasser werden für das Wachstum und den weiten Transportweg aufgewendet.')">8</div>
       </div>
+
+      <div id="hotspotInfo" class="hotspot-info"></div>
     </section>
 
-    <!-- SCHÄTZ-ECKE 2 VOR DEM WASSERGIGANTEN-CHECK -->
+    <!-- SCHÄTZ-ECKE 2 VOR STATION 2 -->
     <section class="guess-box">
       <h3>🤔 Schätz-Ecke 2: Vorbereitung auf den Wassergiganten-Check</h3>
       <p>Hier sind 4 neue Produkte. Welches verbraucht wohl am meisten Wasser und welches am wenigsten? Schätze die Liter:</p>
@@ -411,7 +675,7 @@
         <input type="number" id="guessShoes" placeholder="z. B. 4000"> Liter
       </div>
 
-      <button class="btn-check" onclick="document.getElementById('solutionBox2').style.display='block'">Rangfolge & Liter anzeigen</button>
+      <button class="btn-action" onclick="document.getElementById('solutionBox2').style.display='block'">Rangfolge & Liter anzeigen</button>
 
       <div id="solutionBox2" class="solution">
         <strong>🔍 Die echte Rangfolge vom kleinsten zum größten Wassergiganten:</strong>
@@ -424,88 +688,90 @@
       </div>
     </section>
 
-    <!-- STATION 2: WASSERGIGANTEN-CHECK -->
+    <!-- STATION 2: WASSERGIGANTEN-CHECK (ORIGINAL H5P DRAG & DROP) -->
     <section class="card">
       <h2>Station 2: Wassergiganten-Check</h2>
-      <p>Ordne die Produkte nach ihrem virtuellen Wasserverbrauch ein.</p>
-      <div class="iframe-wrapper">
-        <iframe src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/content/1292984077120371957/embed" aria-label="Wassergiganten-Check" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay *; geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe>
+      <p>Ordne die Produkte nach ihrem virtuellen Wasserverbrauch ein (Ziehe die Kärtchen mit der Maus in die Felder):</p>
+
+      <div class="h5p-drag-board">
+        <div class="ranking-header">
+          Wasserschule Oberfranken: Das große Wasser-Ranking
+        </div>
+
+        <div id="dragPool" class="drag-pool" ondragover="allowDrop(event)" ondrop="dropToPool(event)">
+          <div class="drag-card" draggable="true" id="item_apple" data-correct="slot_1" ondragstart="drag(event)">
+            <img src="apfel.png" alt="Apfel">
+          </div>
+          <div class="drag-card" draggable="true" id="item_bread" data-correct="slot_2" ondragstart="drag(event)">
+            <img src="brot.png" alt="Brot">
+          </div>
+          <div class="drag-card" draggable="true" id="item_tshirt" data-correct="slot_3" ondragstart="drag(event)">
+            <img src="tshirt.png" alt="T-Shirt">
+          </div>
+          <div class="drag-card" draggable="true" id="item_jeans" data-correct="slot_4" ondragstart="drag(event)">
+            <img src="jeans.png" alt="Jeans">
+          </div>
+          <div class="drag-card" draggable="true" id="item_steak" data-correct="slot_5" ondragstart="drag(event)">
+            <img src="steak.png" alt="Steak">
+          </div>
+        </div>
+
+        <div class="scale-bar"></div>
+        <div class="scale-labels">
+          <span>Geringster Wasserverbrauch</span>
+          <span>Höchster Wasserverbrauch</span>
+        </div>
+
+        <div class="slots-container">
+          <div class="slot-column slot-blue">
+            <div class="slot-pill pill-blue">Platz 1</div>
+            <div class="drop-zone" id="slot_1" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
+            <div class="slot-footer-text text-blue">Wenigstes Wasser</div>
+            <span class="slot-badge" id="badge_1"></span>
+          </div>
+
+          <div class="slot-column slot-blue">
+            <div class="slot-pill pill-blue">Platz 2</div>
+            <div class="drop-zone" id="slot_2" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
+            <div class="slot-footer-text text-blue">Gering</div>
+            <span class="slot-badge" id="badge_2"></span>
+          </div>
+
+          <div class="slot-column slot-blue">
+            <div class="slot-pill pill-blue">Platz 3</div>
+            <div class="drop-zone" id="slot_3" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
+            <div class="slot-footer-text text-blue">Mittel</div>
+            <span class="slot-badge" id="badge_3"></span>
+          </div>
+
+          <div class="slot-column slot-blue">
+            <div class="slot-pill pill-blue">Platz 4</div>
+            <div class="drop-zone" id="slot_4" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
+            <div class="slot-footer-text text-blue">Viel</div>
+            <span class="slot-badge" id="badge_4"></span>
+          </div>
+
+          <div class="slot-column slot-red">
+            <div class="slot-pill pill-red">Platz 5</div>
+            <div class="drop-zone" id="slot_5" ondragover="allowDrop(event)" ondrop="dropToSlot(event)"></div>
+            <div class="slot-footer-text text-red">Meistes Wasser</div>
+            <span class="slot-badge" id="badge_5"></span>
+          </div>
+        </div>
+
+        <div class="ranking-action-bar">
+          <button class="btn-check-ranking" onclick="checkRankingH5P()">Überprüfen</button>
+          <button class="btn-retry" onclick="resetRankingH5P()">🔄 Wiederholen</button>
+          <span id="scoreDisplay" class="score-display"></span>
+        </div>
       </div>
     </section>
 
-    <!-- STATION 3: DIFFERENZIERTES ZWEI-STUFEN-FINALE -->
-    <section class="card">
-      <h2>Station 3: Wasserprofi-check</h2>
-      
-      <!-- STUFE 1: JUNIOR-TRAINER -->
-      <div class="junior-trainer">
-        <h3 style="color: #d35400; margin-top: 0;">🟢🔵⚪ Level 1: Junior-Trainer (Farb-Zuordnung)</h3>
-        <p>Welche Wasser-Farbe passt? Klicke auf die richtige Farbe und teste dein Wissen sofort:</p>
-        
-        <div class="trainer-card">
-          <span>1. 🌧️ Ein <strong>Regenschauer</strong> lässt das Weizenfeld in Franken wachsen:</span>
-          <div class="trainer-btns">
-            <button class="btn-g" onclick="checkTrainer(1, 'green')">Grün</button>
-            <button class="btn-b" onclick="checkTrainer(1, 'blue')">Blau</button>
-            <button class="btn-gr" onclick="checkTrainer(1, 'gray')">Grau</button>
-            <span id="fb1" class="trainer-feedback"></span>
-          </div>
-        </div>
-
-        <div class="trainer-card">
-          <span>2. 🚰 Riesige <strong>Sprinkler-Anlagen</strong> pumpen Flusswasser auf ein Erdbeerfeld in Spanien:</span>
-          <div class="trainer-btns">
-            <button class="btn-g" onclick="checkTrainer(2, 'green')">Grün</button>
-            <button class="btn-b" onclick="checkTrainer(2, 'blue')">Blau</button>
-            <button class="btn-gr" onclick="checkTrainer(2, 'gray')">Grau</button>
-            <span id="fb2" class="trainer-feedback"></span>
-          </div>
-        </div>
-
-        <div class="trainer-card">
-          <span>3. 👖 In einer Fabrik fließt <strong>giftige blaue Textilfarbe</strong> ins Abwasser:</span>
-          <div class="trainer-btns">
-            <button class="btn-g" onclick="checkTrainer(3, 'green')">Grün</button>
-            <button class="btn-b" onclick="checkTrainer(3, 'blue')">Blau</button>
-            <button class="btn-gr" onclick="checkTrainer(3, 'gray')">Grau</button>
-            <span id="fb3" class="trainer-feedback"></span>
-          </div>
-        </div>
-
-        <div class="trainer-card">
-          <span>4. 🚜 Ein Bauer spritzt <strong>Kunstdünger</strong>, der ins Grundwasser sickert:</span>
-          <div class="trainer-btns">
-            <button class="btn-g" onclick="checkTrainer(4, 'green')">Grün</button>
-            <button class="btn-b" onclick="checkTrainer(4, 'blue')">Blau</button>
-            <button class="btn-gr" onclick="checkTrainer(4, 'gray')">Grau</button>
-            <span id="fb4" class="trainer-feedback"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- STUFE 2: PROFI-MEMORY -->
-      <h3 style="color: #0077b6;">🧠 Level 2: Profi-Memory-Spiel</h3>
-      <p>Finde die passenden Paare und meistere die kniffligen Begriffe:</p>
-
-      <details class="memory-hint-box">
-        <summary>💡 Detektiv-Joker & Denkstützen öffnen (Hier klicken)</summary>
-        <div class="memory-hint-content">
-          <strong style="color: #6a1b9a;">1. Die Farb-Merkbrücken:</strong>
-          <ul style="margin-bottom: 12px;">
-            <li>🌱 <strong>Grün:</strong> Natürlicher Regen auf Felder und Wiesen.</li>
-            <li>🚰 <strong>Blau:</strong> Künstlich gepumptes Wasser (Brunnen, Leitungen, Schläuche).</li>
-            <li>🧪 <strong>Grau:</strong> Schmutzwasser durch Farben, Dünger oder Industrie.</li>
-          </ul>
-          <div style="background: #fdf2e9; border-left: 4px solid #e67e22; padding: 10px; border-radius: 4px; font-size: 0.95rem;">
-            ⚠️ <strong>Achtung Stolperfalle:</strong> Künstlich bewässerte Pflanzen zählen als <strong>blaues Wasser</strong>, nicht als grünes Wasser!
-          </div>
-        </div>
-      </details>
-<!-- STATION 3: NATIVES MEMORY-SPIEL IM ECHTEN H5P-DESIGN -->
+    <!-- STATION 3: FARB-CHECK, JOKER-HILFEN & PROFI-MEMORY -->
     <section class="card">
       <h2>Station 3: Farb-Check & Memory-Finale</h2>
       
-      <!-- LEVEL 1: JUNIOR-TRAINER (DIFFERENZIERUNG) -->
+      <!-- LEVEL 1: JUNIOR-TRAINER -->
       <div class="junior-trainer" style="background:#fdf8e2; border:2px solid #f39c12; border-radius:10px; padding:20px; margin-bottom:25px;">
         <h3 style="color: #d35400; margin-top: 0;">🟢🔵⚪ Level 1: Junior-Trainer (Farb-Zuordnung)</h3>
         <p>Welche Wasser-Farbe passt? Klicke auf die richtige Farbe und teste dein Wissen sofort:</p>
@@ -539,29 +805,41 @@
             <span id="fb3" class="trainer-feedback"></span>
           </div>
         </div>
+
+        <div class="trainer-card">
+          <span>4. 🚜 Ein Bauer spritzt <strong>Kunstdünger</strong>, der ins Grundwasser sickert:</span>
+          <div class="trainer-btns">
+            <button class="btn-g" onclick="checkTrainer(4, 'green')">Grün</button>
+            <button class="btn-b" onclick="checkTrainer(4, 'blue')">Blau</button>
+            <button class="btn-gr" onclick="checkTrainer(4, 'gray')">Grau</button>
+            <span id="fb4" class="trainer-feedback"></span>
+          </div>
+        </div>
       </div>
 
-      <!-- LEVEL 2: PROFI-MEMORY -->
+      <!-- LEVEL 2: PROFI-MEMORY MIT DETEKTIV-JOKER -->
       <h3 style="color: #0077b6;">🧠 Level 2: Profi-Memory-Spiel</h3>
       <p>Finde alle 6 zusammengehörenden Paare:</p>
 
+      <!-- AUFKLAPPBARER DETEKTIV-JOKER -->
       <details class="memory-hint-box">
         <summary>💡 Detektiv-Joker & Denkstützen öffnen (Hier klicken)</summary>
         <div class="memory-hint-content">
-          <strong>Kleine Gedächtnisstütze:</strong>
-          <ul>
-            <li>🌱 <strong>Grünes Wasser:</strong> Regenwasser im Boden.</li>
-            <li>🚰 <strong>Blaues Wasser:</strong> Künstlich gepumptes Wasser aus Brunnen und Flüssen.</li>
-            <li>🧪 <strong>Graues Wasser:</strong> Durch Industrie oder Dünger verschmutztes Wasser.</li>
+          <strong style="color: #6a1b9a;">Die Farb-Merkbrücken:</strong>
+          <ul style="margin-bottom: 12px;">
+            <li>🌱 <strong>Grünes Wasser:</strong> Natürlicher Regen auf Felder und Wiesen.</li>
+            <li>🚰 <strong>Blaues Wasser:</strong> Künstlich gepumptes Wasser (Brunnen, Leitungen, Schläuche).</li>
+            <li>🧪 <strong>Graues Wasser:</strong> Schmutzwasser durch Farben, Dünger oder Industrie.</li>
           </ul>
+          <div style="background: #fdf2e9; border-left: 4px solid #e67e22; padding: 10px; border-radius: 4px; font-size: 0.95rem;">
+            ⚠️ <strong>Achtung Stolperfalle:</strong> Künstlich bewässerte Pflanzen zählen als <strong>blaues Wasser</strong>, nicht als grünes Wasser!
+          </div>
         </div>
       </details>
 
-      <!-- MEMORY SPIELFELD -->
       <div class="h5p-memory-wrapper">
         <div class="memory-grid" id="memoryGrid"></div>
 
-        <!-- H5P Fußleiste mit Zähler & Retry -->
         <div class="memory-footer">
           <div class="memory-stats">
             <span>Versuche: <strong id="movesCount">0</strong></span>
@@ -573,227 +851,66 @@
       </div>
     </section>
 
-    <!-- CSS STILE FÜR H5P 3D-FLIP MEMORY -->
-    <style>
-      .h5p-memory-wrapper {
-        background: #f8fbfe;
-        border: 2px solid #d0e7f9;
-        border-radius: 12px;
-        padding: 20px;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-      .memory-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        perspective: 1000px;
-      }
-      .memory-card-container {
-        height: 120px;
-        cursor: pointer;
-        position: relative;
-      }
-      .memory-card-inner {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        transform-style: preserve-3d;
-        transition: transform 0.5s ease;
-        border-radius: 8px;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-      }
-      .memory-card-container.flipped .memory-card-inner,
-      .memory-card-container.matched .memory-card-inner {
-        transform: rotateY(180deg);
-      }
-      .card-front, .card-back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 10px;
-        box-sizing: border-box;
-        font-weight: bold;
-      }
-      /* Kartenrücken (verdeckt) */
-      .card-front {
-        background: #0077b6;
-        color: #ffffff;
-        font-size: 2rem;
-      }
-      /* Kartenvorderseite (aufgedeckt) */
-      .card-back {
-        background: #ffffff;
-        color: #1e3a8a;
-        transform: rotateY(180deg);
-        border: 2px solid #0077b6;
-        font-size: 0.95rem;
-        line-height: 1.3;
-      }
-      .memory-card-container.matched .card-back {
-        background: #e8f5e9;
-        border-color: #2e7d32;
-        color: #1b5e20;
-      }
-      .memory-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 20px;
-        padding-top: 15px;
-        border-top: 1px solid #d0e7f9;
-      }
-      .memory-stats {
-        font-size: 1.05rem;
-        color: #023e8a;
-        display: flex;
-        gap: 20px;
-      }
-      .btn-memory-retry {
-        background: #ffffff;
-        color: #0077b6;
-        border: 2px solid #0077b6;
-        padding: 8px 16px;
-        border-radius: 6px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.2s;
-      }
-      .btn-memory-retry:hover {
-        background: #0077b6;
-        color: #ffffff;
-      }
-      .memory-win-banner {
-        display: none;
-        margin-top: 15px;
-        padding: 15px;
-        background: #e8f5e9;
-        border: 2px solid #2e7d32;
-        border-radius: 8px;
-        text-align: center;
-        color: #1b5e20;
-        font-size: 1.15rem;
-        font-weight: bold;
-      }
-      @media (max-width: 650px) {
-        .memory-grid { grid-template-columns: repeat(3, 1fr); }
-        .memory-card-container { height: 105px; }
-        .card-back { font-size: 0.85rem; }
-      }
-    </style>
-
-    <!-- JAVASCRIPT LOGIK FÜR DAS H5P MEMORY -->
-    <script>
-      const memoryCards = [
-        { id: 1, text: "🌧️ Grünes Wasser" },
-        { id: 1, text: "Regenwasser im Boden für Pflanzen" },
-        { id: 2, text: "🚰 Blaues Wasser" },
-        { id: 2, text: "Künstliche Bewässerung aus Flüssen & Seen" },
-        { id: 3, text: "🏭 Graues Wasser" },
-        { id: 3, text: "Verschmutztes Abwasser aus Fabriken" },
-        { id: 4, text: "🥩 15.400 Liter" },
-        { id: 4, text: "Wasserbedarf für 1 kg Rindfleisch" },
-        { id: 5, text: "👖 8.000 Liter" },
-        { id: 5, text: "Wasserbedarf für eine einzige Jeans" },
-        { id: 6, text: "📜 Recyclingpapier" },
-        { id: 6, text: "Spart über 70% Wasser gegenüber Neupapier" }
-      ];
-
-      let flippedCards = [];
-      let matchedPairs = 0;
-      let moves = 0;
-      let isBusy = false;
-
-      function shuffleArray(arr) {
-        return arr.sort(() => Math.random() - 0.5);
-      }
-
-      function initMemory() {
-        const grid = document.getElementById('memoryGrid');
-        grid.innerHTML = '';
-        flippedCards = [];
-        matchedPairs = 0;
-        moves = 0;
-        isBusy = false;
-        document.getElementById('movesCount').innerText = moves;
-        document.getElementById('pairsCount').innerText = matchedPairs + ' / 6';
-        document.getElementById('memoryWinBanner').style.display = 'none';
-
-        const shuffled = shuffleArray([...memoryCards]);
-
-        shuffled.forEach((item) => {
-          const container = document.createElement('div');
-          container.classList.add('memory-card-container');
-          container.dataset.id = item.id;
-          container.dataset.text = item.text;
-
-          container.innerHTML = `
-            <div class="memory-card-inner">
-              <div class="card-front">❓</div>
-              <div class="card-back">${item.text}</div>
-            </div>
-          `;
-
-          container.addEventListener('click', handleCardClick);
-          grid.appendChild(container);
-        });
-      }
-
-      function handleCardClick() {
-        if (isBusy) return;
-        if (this.classList.contains('flipped') || this.classList.contains('matched')) return;
-
-        this.classList.add('flipped');
-        flippedCards.push(this);
-
-        if (flippedCards.length === 2) {
-          moves++;
-          document.getElementById('movesCount').innerText = moves;
-          isBusy = true;
-          checkMemoryMatch();
-        }
-      }
-
-      function checkMemoryMatch() {
-        const [c1, c2] = flippedCards;
-        if (c1.dataset.id === c2.dataset.id) {
-          setTimeout(() => {
-            c1.classList.add('matched');
-            c2.classList.add('matched');
-            matchedPairs++;
-            document.getElementById('pairsCount').innerText = matchedPairs + ' / 6';
-            flippedCards = [];
-            isBusy = false;
-
-            if (matchedPairs === 6) {
-              const banner = document.getElementById('memoryWinBanner');
-              banner.innerHTML = `🎉 <strong>Hervorragend gelöst!</strong> Du hast alle Paare in nur <strong>${moves} Zügen</strong> gefunden!`;
-              banner.style.display = 'block';
-            }
-          }, 400);
-        } else {
-          setTimeout(() => {
-            c1.classList.remove('flipped');
-            c2.classList.remove('flipped');
-            flippedCards = [];
-            isBusy = false;
-          }, 1000);
-        }
-      }
-
-  
-      document.addEventListener('DOMContentLoaded', initMemory);
-    </script>
-
   </div>
 
+  <!-- JAVASCRIPT-LOGIK FÜR ALLE SPIELE -->
   <script>
+    // Station 1: Hotspot Popup
+    function showHotspot(text) {
+      var box = document.getElementById('hotspotInfo');
+      box.innerHTML = '🔍 <strong>Info-Punkt:</strong> ' + text;
+      box.style.display = 'block';
+    }
+
+    // Station 2: Drag & Drop
+    function allowDrop(ev) { ev.preventDefault(); }
+    function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+    function dropToSlot(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      var draggedElement = document.getElementById(data);
+      var targetZone = ev.target.closest('.drop-zone');
+      if (targetZone && targetZone.children.length === 0) {
+        targetZone.appendChild(draggedElement);
+      }
+    }
+    function dropToPool(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      var draggedElement = document.getElementById(data);
+      document.getElementById('dragPool').appendChild(draggedElement);
+    }
+    function checkRankingH5P() {
+      let score = 0;
+      const slots = ['slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5'];
+      slots.forEach((slotId, index) => {
+        const slot = document.getElementById(slotId);
+        const badge = document.getElementById('badge_' + (index + 1));
+        if (slot.children.length > 0) {
+          const card = slot.children[0];
+          if (card.getAttribute('data-correct') === slotId) {
+            score++;
+            badge.innerHTML = "✅";
+          } else {
+            badge.innerHTML = "❌";
+          }
+        } else {
+          badge.innerHTML = "❌";
+        }
+      });
+      document.getElementById('scoreDisplay').innerText = score + " / 5 Punkten";
+    }
+    function resetRankingH5P() {
+      const pool = document.getElementById('dragPool');
+      const cards = document.querySelectorAll('.drag-card');
+      cards.forEach(card => pool.appendChild(card));
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById('badge_' + i).innerHTML = "";
+      }
+      document.getElementById('scoreDisplay').innerText = "";
+    }
+
+    // Station 3: Junior Trainer
     function checkTrainer(q, choice) {
       var answers = { 1: 'green', 2: 'blue', 3: 'gray', 4: 'gray' };
       var fb = document.getElementById('fb' + q);
@@ -805,6 +922,106 @@
         fb.style.color = "#c0392b";
       }
     }
+
+    // Station 3: 3D Memory Game
+    const memoryCards = [
+      { id: 1, text: "🌧️ Grünes Wasser" },
+      { id: 1, text: "Regenwasser im Boden für Pflanzen" },
+      { id: 2, text: "🚰 Blaues Wasser" },
+      { id: 2, text: "Künstliche Bewässerung aus Flüssen & Seen" },
+      { id: 3, text: "🏭 Graues Wasser" },
+      { id: 3, text: "Verschmutztes Abwasser aus Fabriken" },
+      { id: 4, text: "🥩 15.400 Liter" },
+      { id: 4, text: "Wasserbedarf für 1 kg Rindfleisch" },
+      { id: 5, text: "👖 8.000 Liter" },
+      { id: 5, text: "Wasserbedarf für eine einzige Jeans" },
+      { id: 6, text: "📜 Recyclingpapier" },
+      { id: 6, text: "Spart über 70% Wasser gegenüber Neupapier" }
+    ];
+
+    let flippedCards = [];
+    let matchedPairs = 0;
+    let moves = 0;
+    let isBusy = false;
+
+    function shuffleArray(arr) {
+      return arr.sort(() => Math.random() - 0.5);
+    }
+
+    function initMemory() {
+      const grid = document.getElementById('memoryGrid');
+      grid.innerHTML = '';
+      flippedCards = [];
+      matchedPairs = 0;
+      moves = 0;
+      isBusy = false;
+      document.getElementById('movesCount').innerText = moves;
+      document.getElementById('pairsCount').innerText = matchedPairs + ' / 6';
+      document.getElementById('memoryWinBanner').style.display = 'none';
+
+      const shuffled = shuffleArray([...memoryCards]);
+
+      shuffled.forEach((item) => {
+        const container = document.createElement('div');
+        container.classList.add('memory-card-container');
+        container.dataset.id = item.id;
+        container.dataset.text = item.text;
+
+        container.innerHTML = `
+          <div class="memory-card-inner">
+            <div class="card-front">❓</div>
+            <div class="card-back">${item.text}</div>
+          </div>
+        `;
+
+        container.addEventListener('click', handleCardClick);
+        grid.appendChild(container);
+      });
+    }
+
+    function handleCardClick() {
+      if (isBusy) return;
+      if (this.classList.contains('flipped') || this.classList.contains('matched')) return;
+
+      this.classList.add('flipped');
+      flippedCards.push(this);
+
+      if (flippedCards.length === 2) {
+        moves++;
+        document.getElementById('movesCount').innerText = moves;
+        isBusy = true;
+        checkMemoryMatch();
+      }
+    }
+
+    function checkMemoryMatch() {
+      const [c1, c2] = flippedCards;
+      if (c1.dataset.id === c2.dataset.id) {
+        setTimeout(() => {
+          c1.classList.add('matched');
+          c2.classList.add('matched');
+          matchedPairs++;
+          document.getElementById('pairsCount').innerText = matchedPairs + ' / 6';
+          flippedCards = [];
+          isBusy = false;
+
+          if (matchedPairs === 6) {
+            const banner = document.getElementById('memoryWinBanner');
+            banner.innerHTML = `🎉 <strong>Hervorragend gelöst!</strong> Du hast alle Paare in nur <strong>${moves} Zügen</strong> gefunden!`;
+            banner.style.display = 'block';
+          }
+        }, 400);
+      } else {
+        setTimeout(() => {
+          c1.classList.remove('flipped');
+          c2.classList.remove('flipped');
+          flippedCards = [];
+          isBusy = false;
+        }, 1000);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initMemory);
   </script>
 
 </body>
