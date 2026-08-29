@@ -501,11 +501,295 @@
           </div>
         </div>
       </details>
+<!-- STATION 3: NATIVES MEMORY-SPIEL IM ECHTEN H5P-DESIGN -->
+    <section class="card">
+      <h2>Station 3: Farb-Check & Memory-Finale</h2>
+      
+      <!-- LEVEL 1: JUNIOR-TRAINER (DIFFERENZIERUNG) -->
+      <div class="junior-trainer" style="background:#fdf8e2; border:2px solid #f39c12; border-radius:10px; padding:20px; margin-bottom:25px;">
+        <h3 style="color: #d35400; margin-top: 0;">🟢🔵⚪ Level 1: Junior-Trainer (Farb-Zuordnung)</h3>
+        <p>Welche Wasser-Farbe passt? Klicke auf die richtige Farbe und teste dein Wissen sofort:</p>
+        
+        <div class="trainer-card">
+          <span>1. 🌧️ Ein <strong>Regenschauer</strong> lässt das Weizenfeld in Franken wachsen:</span>
+          <div class="trainer-btns">
+            <button class="btn-g" onclick="checkTrainer(1, 'green')">Grün</button>
+            <button class="btn-b" onclick="checkTrainer(1, 'blue')">Blau</button>
+            <button class="btn-gr" onclick="checkTrainer(1, 'gray')">Grau</button>
+            <span id="fb1" class="trainer-feedback"></span>
+          </div>
+        </div>
 
-      <div class="iframe-wrapper">
-        <iframe src="https://virtuelleswasserwasserschuleoberfranken.h5p.com/content/1292975888941131377/embed" aria-label="Memory Spiel" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay *; geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe>
+        <div class="trainer-card">
+          <span>2. 🚰 Riesige <strong>Sprinkler-Anlagen</strong> pumpen Flusswasser auf ein Erdbeerfeld in Spanien:</span>
+          <div class="trainer-btns">
+            <button class="btn-g" onclick="checkTrainer(2, 'green')">Grün</button>
+            <button class="btn-b" onclick="checkTrainer(2, 'blue')">Blau</button>
+            <button class="btn-gr" onclick="checkTrainer(2, 'gray')">Grau</button>
+            <span id="fb2" class="trainer-feedback"></span>
+          </div>
+        </div>
+
+        <div class="trainer-card">
+          <span>3. 👖 In einer Fabrik fließt <strong>giftige Textilfarbe</strong> ins Abwasser:</span>
+          <div class="trainer-btns">
+            <button class="btn-g" onclick="checkTrainer(3, 'green')">Grün</button>
+            <button class="btn-b" onclick="checkTrainer(3, 'blue')">Blau</button>
+            <button class="btn-gr" onclick="checkTrainer(3, 'gray')">Grau</button>
+            <span id="fb3" class="trainer-feedback"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEVEL 2: PROFI-MEMORY -->
+      <h3 style="color: #0077b6;">🧠 Level 2: Profi-Memory-Spiel</h3>
+      <p>Finde alle 6 zusammengehörenden Paare:</p>
+
+      <details class="memory-hint-box">
+        <summary>💡 Detektiv-Joker & Denkstützen öffnen (Hier klicken)</summary>
+        <div class="memory-hint-content">
+          <strong>Kleine Gedächtnisstütze:</strong>
+          <ul>
+            <li>🌱 <strong>Grünes Wasser:</strong> Regenwasser im Boden.</li>
+            <li>🚰 <strong>Blaues Wasser:</strong> Künstlich gepumptes Wasser aus Brunnen und Flüssen.</li>
+            <li>🧪 <strong>Graues Wasser:</strong> Durch Industrie oder Dünger verschmutztes Wasser.</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- MEMORY SPIELFELD -->
+      <div class="h5p-memory-wrapper">
+        <div class="memory-grid" id="memoryGrid"></div>
+
+        <!-- H5P Fußleiste mit Zähler & Retry -->
+        <div class="memory-footer">
+          <div class="memory-stats">
+            <span>Versuche: <strong id="movesCount">0</strong></span>
+            <span>Paare: <strong id="pairsCount">0 / 6</strong></span>
+          </div>
+          <button class="btn-memory-retry" onclick="initMemory()">🔄 Neustart</button>
+        </div>
+        <div id="memoryWinBanner" class="memory-win-banner"></div>
       </div>
     </section>
+
+    <!-- CSS STILE FÜR H5P 3D-FLIP MEMORY -->
+    <style>
+      .h5p-memory-wrapper {
+        background: #f8fbfe;
+        border: 2px solid #d0e7f9;
+        border-radius: 12px;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .memory-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        perspective: 1000px;
+      }
+      .memory-card-container {
+        height: 120px;
+        cursor: pointer;
+        position: relative;
+      }
+      .memory-card-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.5s ease;
+        border-radius: 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      }
+      .memory-card-container.flipped .memory-card-inner,
+      .memory-card-container.matched .memory-card-inner {
+        transform: rotateY(180deg);
+      }
+      .card-front, .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 10px;
+        box-sizing: border-box;
+        font-weight: bold;
+      }
+      /* Kartenrücken (verdeckt) */
+      .card-front {
+        background: #0077b6;
+        color: #ffffff;
+        font-size: 2rem;
+      }
+      /* Kartenvorderseite (aufgedeckt) */
+      .card-back {
+        background: #ffffff;
+        color: #1e3a8a;
+        transform: rotateY(180deg);
+        border: 2px solid #0077b6;
+        font-size: 0.95rem;
+        line-height: 1.3;
+      }
+      .memory-card-container.matched .card-back {
+        background: #e8f5e9;
+        border-color: #2e7d32;
+        color: #1b5e20;
+      }
+      .memory-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #d0e7f9;
+      }
+      .memory-stats {
+        font-size: 1.05rem;
+        color: #023e8a;
+        display: flex;
+        gap: 20px;
+      }
+      .btn-memory-retry {
+        background: #ffffff;
+        color: #0077b6;
+        border: 2px solid #0077b6;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .btn-memory-retry:hover {
+        background: #0077b6;
+        color: #ffffff;
+      }
+      .memory-win-banner {
+        display: none;
+        margin-top: 15px;
+        padding: 15px;
+        background: #e8f5e9;
+        border: 2px solid #2e7d32;
+        border-radius: 8px;
+        text-align: center;
+        color: #1b5e20;
+        font-size: 1.15rem;
+        font-weight: bold;
+      }
+      @media (max-width: 650px) {
+        .memory-grid { grid-template-columns: repeat(3, 1fr); }
+        .memory-card-container { height: 105px; }
+        .card-back { font-size: 0.85rem; }
+      }
+    </style>
+
+    <!-- JAVASCRIPT LOGIK FÜR DAS H5P MEMORY -->
+    <script>
+      const memoryCards = [
+        { id: 1, text: "🌧️ Grünes Wasser" },
+        { id: 1, text: "Regenwasser im Boden für Pflanzen" },
+        { id: 2, text: "🚰 Blaues Wasser" },
+        { id: 2, text: "Künstliche Bewässerung aus Flüssen & Seen" },
+        { id: 3, text: "🏭 Graues Wasser" },
+        { id: 3, text: "Verschmutztes Abwasser aus Fabriken" },
+        { id: 4, text: "🥩 15.400 Liter" },
+        { id: 4, text: "Wasserbedarf für 1 kg Rindfleisch" },
+        { id: 5, text: "👖 8.000 Liter" },
+        { id: 5, text: "Wasserbedarf für eine einzige Jeans" },
+        { id: 6, text: "📜 Recyclingpapier" },
+        { id: 6, text: "Spart über 70% Wasser gegenüber Neupapier" }
+      ];
+
+      let flippedCards = [];
+      let matchedPairs = 0;
+      let moves = 0;
+      let isBusy = false;
+
+      function shuffleArray(arr) {
+        return arr.sort(() => Math.random() - 0.5);
+      }
+
+      function initMemory() {
+        const grid = document.getElementById('memoryGrid');
+        grid.innerHTML = '';
+        flippedCards = [];
+        matchedPairs = 0;
+        moves = 0;
+        isBusy = false;
+        document.getElementById('movesCount').innerText = moves;
+        document.getElementById('pairsCount').innerText = matchedPairs + ' / 6';
+        document.getElementById('memoryWinBanner').style.display = 'none';
+
+        const shuffled = shuffleArray([...memoryCards]);
+
+        shuffled.forEach((item) => {
+          const container = document.createElement('div');
+          container.classList.add('memory-card-container');
+          container.dataset.id = item.id;
+          container.dataset.text = item.text;
+
+          container.innerHTML = `
+            <div class="memory-card-inner">
+              <div class="card-front">❓</div>
+              <div class="card-back">${item.text}</div>
+            </div>
+          `;
+
+          container.addEventListener('click', handleCardClick);
+          grid.appendChild(container);
+        });
+      }
+
+      function handleCardClick() {
+        if (isBusy) return;
+        if (this.classList.contains('flipped') || this.classList.contains('matched')) return;
+
+        this.classList.add('flipped');
+        flippedCards.push(this);
+
+        if (flippedCards.length === 2) {
+          moves++;
+          document.getElementById('movesCount').innerText = moves;
+          isBusy = true;
+          checkMemoryMatch();
+        }
+      }
+
+      function checkMemoryMatch() {
+        const [c1, c2] = flippedCards;
+        if (c1.dataset.id === c2.dataset.id) {
+          setTimeout(() => {
+            c1.classList.add('matched');
+            c2.classList.add('matched');
+            matchedPairs++;
+            document.getElementById('pairsCount').innerText = matchedPairs + ' / 6';
+            flippedCards = [];
+            isBusy = false;
+
+            if (matchedPairs === 6) {
+              const banner = document.getElementById('memoryWinBanner');
+              banner.innerHTML = `🎉 <strong>Hervorragend gelöst!</strong> Du hast alle Paare in nur <strong>${moves} Zügen</strong> gefunden!`;
+              banner.style.display = 'block';
+            }
+          }, 400);
+        } else {
+          setTimeout(() => {
+            c1.classList.remove('flipped');
+            c2.classList.remove('flipped');
+            flippedCards = [];
+            isBusy = false;
+          }, 1000);
+        }
+      }
+
+  
+      document.addEventListener('DOMContentLoaded', initMemory);
+    </script>
 
   </div>
 
